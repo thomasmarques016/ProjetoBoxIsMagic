@@ -1,0 +1,24 @@
+21,15
+XXXXXXXXXXXXXXXXXXXXX
+XXX     XXXXXXXXXXXXX
+X  Xx   XXXXXXXXXXXXX
+X  X  g gX     XXXXXX
+X       gX XxX XXXXXX
+X        H   x XXXXXX
+XXX g    X     XXXXXX
+X    g   X X   X   XX
+Xgg   Xx X X g X   XX
+Xg   g X Xg    H    X
+X        X     X XX X
+XX       XXXXXXX g  X
+XXXgg   XXXXXXXX    X
+XXXXXXXXXXXXXXXXXXg X
+XXXXXXXXXXXXXXXXXXXXX
+
+baba,2,3,r
+box,6,5
+box,12,9
+flag,18,12
+wordBox,2,10
+wordIs,3,10
+wordMove,4,8

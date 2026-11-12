@@ -1,0 +1,29 @@
+23,17
+XXXXXXXXXXXXXXXXXXXXXXX
+XXX      XXXXXXXXXXXXXX
+Xg       XXXX      g XX
+X    g    X         gXX
+X      Xx X           X
+X       X X XX        X
+X XX     gXgXx        X
+X gx      X g       H X
+Xg        X           X
+X  g      H        XxXX
+X    g    X g    Hg   X
+X g   Xx  X   XxX     X
+X  g g X  X     X     X
+XX  gg  g Xg    Xg  XXX
+XXX     XXXX        g X
+XXXXXXXXXXXXX        XX
+XXXXXXXXXXXXXXXXXXXXXXX
+
+baba,2,9,r
+box,6,9
+box,18,12
+wordBox,2,3
+wordIs,3,3
+wordMove,4,5
+wordStop,7,13
+wordBox,15,4
+wordIs,15,5
+wordWin,18,6
