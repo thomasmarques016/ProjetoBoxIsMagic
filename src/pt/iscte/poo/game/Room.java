@@ -1,8 +1,10 @@
 package pt.iscte.poo.game;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 import objects.Baba;
 import objects.Dirt;
@@ -38,12 +40,24 @@ public class Room {
     public static Room readRoom(File f) {
         Room r = new Room();
         r.setName(f.getName());
+        
+        try{
+        Scanner sc = new Scanner(f);
+        if(sc.hasNextLine()){
+            String [] dim = sc.nextLine().split(",", 2);
+            int cols = Integer.parseInt(dim[0]);
+            int rows = Integer.parseInt(dim[1]);
+        }
+        while(sc.hasNextLine()){
+            String linha = sc.nextLine();
+            
+        }
 
-        for (int i = 0; i <= 10; i++) {
-            ImageTile dirt = new Dirt(new Point2D(i, i));
-            r.addObject(dirt);
-            ImageTile dirt2 = new Dirt(new Point2D(10 - i, i));
-            r.addObject(dirt2);
+
+
+        }
+        catch( FileNotFoundException e){
+
         }
 
         Baba baba = new Baba(new Point2D(5, 5));

@@ -7,7 +7,7 @@ import java.util.Random;
 
 public class Baba extends GameObject {
 
-    private String direction = "r";
+    private String direction;
 
     public Baba(Point2D position, String direction) {
         super(position);
