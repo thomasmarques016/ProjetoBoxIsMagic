@@ -10,9 +10,16 @@ public class Wall extends GameObject implements Solid{
 
     @Override 
     public String getName(){
-        return "Wall";
+        return "wall";
     }
 
+<<<<<<< HEAD
     @
+=======
+    @Override
+    public int getLayer() {
+        return 2;
+    }  
+>>>>>>> 734cdd22024dba317d4af22d05ebbdfc7f98d9c9
     
 }
