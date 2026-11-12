@@ -8,11 +8,10 @@ import java.util.Random;
 
 public class Baba implements ImageTile {
 
-    private Point2D position;
     private String direction = "r";
 
     public Baba(Point2D position) {
-        this.position = position;
+        super(position);
     }
 
     @Override
@@ -22,7 +21,7 @@ public class Baba implements ImageTile {
 
     @Override
     public Point2D getPosition() {
-        return position;
+        return super.getPosition();
     }
 
     @Override

@@ -3,12 +3,10 @@ package objects;
 import pt.iscte.poo.gui.ImageTile;
 import pt.iscte.poo.utils.Point2D;
 
-public class Dirt implements ImageTile {
-
-    private Point2D position;
+public class Dirt implements GameObject {
 
     public Dirt(Point2D position) {
-        this.position = position;
+        super(position);
     }
 
     @Override
@@ -18,7 +16,7 @@ public class Dirt implements ImageTile {
 
     @Override
     public Point2D getPosition() {
-        return position;
+        super.getPosition();
     }
 
     @Override
