@@ -62,38 +62,38 @@ import pt.iscte.poo.utils.Point2D;
  */
 
 //Changed to local Observer-Observed pattern 27-Set-2018
-public class ImageGUI extends Observed {
+public class ImageGUI extends Observed { //a janela e o observado
 
     private static final int LABEL_HEIGHT = 20;
 
-    private static final long TICK_TIME = 500;
+    private static final long TICK_TIME = 500; //2 ticks por segundo 
 
     private static ImageGUI INSTANCE;
 
     private final String IMAGE_DIR = "images";
 
-    private int tileWidth = 50;
-    private int tileHeight = 50;
+    private int tileWidth = 50;  //tamanho imagens(ex: baba)
+    private int tileHeight = 50; //tamanho imagens(ex: baba)
 
-    private int rows = 13;
-    private int cols = 17;
+    private int rows = 13;  //tamanho da janela
+    private int cols = 17; //tamanho da janela
 
-    private int width = tileWidth * cols;
+    private int width = tileWidth * cols; 
     private int height = tileHeight * rows;
 
     private JFrame frame;
     private JPanel panel;
     private JLabel info;
 
-    private Map<String, ImageIcon> imageDB = new HashMap<String, ImageIcon>();
+    private Map<String, ImageIcon> imageDB = new HashMap<String, ImageIcon>(); //procuras pelo nome e recebes imagens
 
-    private List<ImageTile> images = new ArrayList<ImageTile>();
+    private List<ImageTile> images = new ArrayList<ImageTile>(); //lista das imagens para desenhar 
 
     // private Point2D lastMouseCoordinate;
-    private boolean mouseClicked;
+    private boolean mouseClicked; 
 
-    private int lastKeyPressed;
-    private boolean keyPressed;
+    private int lastKeyPressed; //ultima tecla 
+    private boolean keyPressed; //alguma tecla foi pressionada?
     private boolean windowClosed = false; // Added 25-oct-2022
 
     private int maxLevel;
@@ -129,11 +129,11 @@ public class ImageGUI extends Observed {
     }
 
     private void init() {
-        frame = new JFrame();
-        panel = new DisplayWindow();
-        info = new JLabel();
+        frame = new JFrame(); //a janela em si
+        panel = new DisplayWindow(); //a area de jogo(onde se pintam as imagens)
+        info = new JLabel(); // a barra de texto em cima
 
-        panel.setPreferredSize(new Dimension(width, height));
+        panel.setPreferredSize(new Dimension(width, height)); 
         info.setPreferredSize(new Dimension(width, LABEL_HEIGHT));
 
         info.setBackground(Color.BLACK);
@@ -154,14 +154,14 @@ public class ImageGUI extends Observed {
         ImageIcon icon = new ImageIcon("icon/Game_Icon.png");
         frame.setIconImage(icon.getImage());
 
-        initImages();
+        initImages(); //carrega as imagens da pasta images
 
-        keywatcher = new KeyWatcher();
+        keywatcher = new KeyWatcher(); //oq ve oq e pressionado
         keywatcher.start();
 
 //		new MouseWatcher().start();
 
-        ticker = new Ticker();
+        ticker = new Ticker(); //relogio
         ticker.start();
 
         frame.addKeyListener(new KeyListener() {
