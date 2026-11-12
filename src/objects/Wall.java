@@ -22,4 +22,5 @@ public class Wall extends GameObject implements Solid{
     }  
 >>>>>>> 734cdd22024dba317d4af22d05ebbdfc7f98d9c9
     
+    
 }
