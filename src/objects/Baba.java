@@ -9,8 +9,9 @@ public class Baba extends GameObject {
 
     private String direction = "r";
 
-    public Baba(Point2D position) {
+    public Baba(Point2D position, String direction) {
         super(position);
+        this.direction= direction;
     }
 
     @Override
@@ -25,6 +26,6 @@ public class Baba extends GameObject {
 
     public void move(Direction d) {
         Random rand = new Random();
-        position = new Point2D(rand.nextInt(10), rand.nextInt(10));
+        setPosition(new Point2D(rand.nextInt(10), rand.nextInt(10)));
     }
 }
