@@ -1,0 +1,30 @@
+23,17
+XXXXXXXXXXXXXXXXXXXXXXX
+XXXg g   XXXXXXXXXXXXXX
+X  Xx     XXXXXX     XX
+X   Xg    XXXXXXg  g XX
+X      Xx XXXXXX XX   X
+X  H      XXXXXX      X
+XXXg       XXXXX g  g X
+XXXXXXXXXX XXXXXXXXX  X
+XXXXX      XXXXX  x   X
+Xg  XX XXX     Xg X   X
+X XX          gX g    X
+XXXXXX       g        X
+X    X  g  gXx X    XXX
+X    X g     X X      X
+X  g X    g    XXXg   X
+XXX  X g      XXXXXXXXX
+XXXXXXXXXXXXXXXXXXXXXXX
+
+baba,2,2,r
+rock,10,8
+rock,9,10
+rock,5,4
+bomb,8,10
+box,15,11
+box,11,14
+flag,20,4
+wordBox,2,12
+wordIs,3,12
+wordStop,4,12
