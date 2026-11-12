@@ -18,4 +18,5 @@ public class Wall extends GameObject implements Solid{
         return 2;
     }  
     
+    
 }
