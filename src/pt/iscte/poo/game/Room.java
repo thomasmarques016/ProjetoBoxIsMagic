@@ -37,7 +37,7 @@ public class Room {
         return objects;
     }
 
-    public static Room readRoom(File f) {
+    /*public static Room readRoom(File f) {
         Room r = new Room();
         r.setName(f.getName());
         
@@ -66,7 +66,7 @@ public class Room {
         r.player = baba;
         return r;
     }
-
+    */
     public Baba getPlayer() {
         return player;
     }
