@@ -1,12 +1,11 @@
 package objects;
 
-import pt.iscte.poo.gui.ImageTile;
 import pt.iscte.poo.utils.Direction;
 import pt.iscte.poo.utils.Point2D;
 
 import java.util.Random;
 
-public class Baba implements ImageTile {
+public class Baba extends GameObject {
 
     private String direction = "r";
 
@@ -17,11 +16,6 @@ public class Baba implements ImageTile {
     @Override
     public String getName() {
         return "baba-" + direction;
-    }
-
-    @Override
-    public Point2D getPosition() {
-        return super.getPosition();
     }
 
     @Override
