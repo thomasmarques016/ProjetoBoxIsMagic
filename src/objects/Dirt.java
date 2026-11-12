@@ -8,11 +8,13 @@ public class Dirt implements GameObject {
     public Dirt(Point2D position) {
         super(position);
     }
+    
 
     @Override
     public String getName() {
         return "dirt";
     }
+
 
     @Override
     public Point2D getPosition() {

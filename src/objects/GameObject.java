@@ -17,6 +17,10 @@ public abstract class GameObject implements ImageTile{
         return this.position;
     }
 
+    public void setPosition(Point2D p){
+        this.position = p;
+    }
+
     @Override 
     public abstract String getName();
 
