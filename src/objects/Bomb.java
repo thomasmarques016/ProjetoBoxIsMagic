@@ -2,7 +2,7 @@ package objects;
 
 import pt.iscte.poo.utils.Point2D;
 
-public class Bomb extends GameObject implements Tickable{
+public class Bomb extends GameObject implements Tickable, Pushable{
 
     private static final int FUSE_TICKS = 10;
     private int ticksLeft;

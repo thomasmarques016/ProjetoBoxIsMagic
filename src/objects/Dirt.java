@@ -17,6 +17,6 @@ public class Dirt extends GameObject {
 
     @Override
     public int getLayer() {
-        return 5;
+        return 0;
     }
 }
