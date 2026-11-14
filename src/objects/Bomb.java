@@ -14,9 +14,9 @@ public class Bomb extends GameObject implements Tickable, Pushable{
         this.isActive = false;
     }
 
-    public void light(){
-        if()
-    }
+    //public void light(){
+    //    if()
+    //}
 
     @Override 
     public String getName(){

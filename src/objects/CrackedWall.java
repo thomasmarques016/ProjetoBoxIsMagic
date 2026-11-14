@@ -11,7 +11,7 @@ public class CrackedWall extends GameObject{
 
     @Override
     public String getName() {
-        return "crackedWall";
+        return "cracked-wall";
     }
 
 
