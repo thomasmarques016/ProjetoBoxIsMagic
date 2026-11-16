@@ -1,5 +1,6 @@
 package pt.iscte.poo.game;
 
+import java.awt.Dimension;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -27,6 +28,9 @@ public class Room {
     private String roomName;
     private Baba player;
 
+    private int x;
+    private int y;
+
     public Room() {
         objects = new ArrayList<>();
     }
@@ -51,7 +55,6 @@ public class Room {
         Room r = new Room();
         r.setName(f.getName());
         
-        
         try{
         Scanner sc = new Scanner(f);
         int cols = 0;
@@ -60,7 +63,10 @@ public class Room {
             String [] dim = sc.nextLine().split(",", 2);
             cols = Integer.parseInt(dim[0].trim());
             rows = Integer.parseInt(dim[1].trim());
+            r.x=cols;
+            r.y=rows;
         }
+        
 
         for(int i = 0; i < rows; i++){ 
                 String linha = sc.nextLine(); // vai ate á ultima linha indicada na primeira linha do ficheiro
@@ -84,12 +90,6 @@ public class Room {
         try{
             Point2D posicao = new Point2D(Integer.parseInt(comp[1]), Integer.parseInt(comp[2]));
 
-            
-        }
-        catch(NumberFormatException | IndexOutOfBoundsException e){
-            System.err.println("Erro na linha: " + linha);
-        }
-       
         if(comp[0].equals("baba")){
             Baba baba = new Baba(posicao, comp[3]);
             r.addObject(baba);
@@ -105,12 +105,25 @@ public class Room {
         else if (comp[0].equals("wordMove")) r.addObject(new WordMove(posicao));
         else if (comp[0].equals("wordStop")) r.addObject(new WordStop(posicao));/* */
         }
+        catch(NumberFormatException | IndexOutOfBoundsException e){
+            System.err.println("Erro na linha: " + linha);
+        }
+        }
         sc.close();
         }
         catch( FileNotFoundException e){
             throw new IllegalArgumentException("Ficheiro nao encontrado");
         }
+        
         return r;
+    }
+
+    public int getX(){ // dimensao
+        return this.x;
+    }
+
+    public int getY(){
+         return this.y;
     }
     
     public Baba getPlayer() {
