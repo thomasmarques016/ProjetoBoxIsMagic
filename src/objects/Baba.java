@@ -1,10 +1,13 @@
 package objects;
 
 import pt.iscte.poo.game.GameEngine;
+import pt.iscte.poo.game.Room;
+import pt.iscte.poo.gui.ImageTile;
 import pt.iscte.poo.utils.Direction;
 import pt.iscte.poo.utils.Point2D;
 import pt.iscte.poo.utils.Vector2D;
 
+import java.util.List;
 import java.util.Random;
 
 public class Baba extends GameObject {
@@ -28,9 +31,22 @@ public class Baba extends GameObject {
 
     public void move(Direction d) {
 
-        Room roomAtual = GameEngine.getInstance().get;
+        Room roomAtual = GameEngine.getInstance().getRoom();
+        List<ImageTile> objects = roomAtual.getObjects();
         Point2D newPosition = getPosition().plus(d.asVector());
+
+        for(ImageTile o : objects){
+            if(o.getPosition().equals(newPosition) && ((GameObject) o).isSolid() &&){
+                return;
+            }
+        }
+
+
         
         setPosition(newPosition);
+    }
+
+    public boolean isOutOfBounds(){
+        
     }
 }

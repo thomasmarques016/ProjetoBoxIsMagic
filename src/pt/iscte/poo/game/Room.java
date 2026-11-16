@@ -81,7 +81,15 @@ public class Room {
         String linha = sc.nextLine().trim(); // a partir dos objetos
         if(linha.isEmpty()) continue;
         String [] comp = linha.split(",");
-        Point2D posicao = new Point2D(Integer.parseInt(comp[1]), Integer.parseInt(comp[2]));
+        try{
+            Point2D posicao = new Point2D(Integer.parseInt(comp[1]), Integer.parseInt(comp[2]));
+
+            
+        }
+        catch(NumberFormatException | IndexOutOfBoundsException e){
+            System.err.println("Erro na linha: " + linha);
+        }
+       
         if(comp[0].equals("baba")){
             Baba baba = new Baba(posicao, comp[3]);
             r.addObject(baba);
