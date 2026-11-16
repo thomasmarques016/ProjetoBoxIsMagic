@@ -2,6 +2,7 @@ package objects;
 
 import pt.iscte.poo.utils.Direction;
 import pt.iscte.poo.utils.Point2D;
+import pt.iscte.poo.utils.Vector2D;
 
 import java.util.Random;
 
@@ -25,7 +26,9 @@ public class Baba extends GameObject {
     }
 
     public void move(Direction d) {
-        Random rand = new Random();
-        setPosition(new Point2D(rand.nextInt(10), rand.nextInt(10)));
+        //Random rand = new Random();
+        //setPosition(new Point2D(rand.nextInt(10), rand.nextInt(10)));
+        Point2D newPosition = getPosition().plus(d.asVector());
+        setPosition(newPosition);
     }
 }
