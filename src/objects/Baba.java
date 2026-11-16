@@ -29,4 +29,8 @@ public class Baba extends GameObject {
         Point2D newPosition = getPosition().plus(d.asVector());
         setPosition(newPosition);
     }
+
+    public boolean isSolid(){
+        return false;
+    }
 }

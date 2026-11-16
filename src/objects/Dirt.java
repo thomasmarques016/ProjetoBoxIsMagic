@@ -19,4 +19,8 @@ public class Dirt extends GameObject {
     public int getLayer() {
         return 0;
     }
+
+    public boolean isSolid(){
+        return false;
+    }
 }

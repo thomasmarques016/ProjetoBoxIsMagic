@@ -20,4 +20,8 @@ public class CrackedWall extends GameObject{
         return 2;
     }
 
+    public boolean isSolid(){
+        return false;
+    }
+
 }

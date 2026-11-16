@@ -27,5 +27,9 @@ public class Bomb extends GameObject implements Tickable, Pushable{
     public int getLayer(){
         return 3;
     }
+
+    public boolean isSolid(){
+        return false;
+    }
     
 }

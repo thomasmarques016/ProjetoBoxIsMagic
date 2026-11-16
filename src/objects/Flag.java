@@ -20,4 +20,8 @@ public class Flag extends GameObject implements Pushable{
         return 3;
     }
 
+    public boolean isSolid(){
+        return false;
+    }
+
 }

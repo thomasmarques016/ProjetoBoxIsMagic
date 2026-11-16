@@ -19,4 +19,8 @@ public class Grass extends GameObject{
     public int getLayer() {
         return 1;
     }
+
+    public boolean isSolid(){
+        return false;
+    }
 }
