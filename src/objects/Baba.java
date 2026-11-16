@@ -28,7 +28,7 @@ public class Baba extends GameObject {
 
     public void move(Direction d) {
 
-        Room roomAtual = GameEngine.getInstance().currentRoom;
+        Room roomAtual = GameEngine.getInstance().get;
         Point2D newPosition = getPosition().plus(d.asVector());
         
         setPosition(newPosition);
