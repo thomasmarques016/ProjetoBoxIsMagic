@@ -1,5 +1,6 @@
 package objects;
 
+import pt.iscte.poo.game.GameEngine;
 import pt.iscte.poo.utils.Direction;
 import pt.iscte.poo.utils.Point2D;
 import pt.iscte.poo.utils.Vector2D;
@@ -26,8 +27,10 @@ public class Baba extends GameObject {
     }
 
     public void move(Direction d) {
+
+        Room roomAtual = GameEngine.getInstance().currentRoom;
         Point2D newPosition = getPosition().plus(d.asVector());
-        if()
+        
         setPosition(newPosition);
     }
 }
