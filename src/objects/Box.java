@@ -19,9 +19,5 @@ public class Box extends GameObject implements Pushable{
     public int getLayer() {
         return 3;
     }
-
-    public boolean isSolid(){
-        return false;
-    }
     
 }

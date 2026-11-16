@@ -19,7 +19,4 @@ public class Hole extends GameObject {
         return 1;
     }
 
-    public boolean isSolid(){
-        return false;
-    }
 }

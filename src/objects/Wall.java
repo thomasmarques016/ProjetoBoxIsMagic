@@ -18,6 +18,7 @@ public class Wall extends GameObject {
         return 2;
     }
 
+    @Override 
     public boolean isSolid(){
         return true;
     }
