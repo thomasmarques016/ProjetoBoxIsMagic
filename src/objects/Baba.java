@@ -35,8 +35,9 @@ public class Baba extends GameObject {
         List<ImageTile> objects = roomAtual.getObjects();
         Point2D newPosition = getPosition().plus(d.asVector());
 
+        if(isOutOfBounds(newPosition)) return;
         for(ImageTile o : objects){
-            if((o.getPosition().equals(newPosition) && ((GameObject) o).isSolid()) || isOutOfBounds(newPosition)){
+            if((o.getPosition().equals(newPosition) && ((GameObject) o).isSolid())){
                 return;
             }
         }
