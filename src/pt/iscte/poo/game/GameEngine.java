@@ -17,7 +17,7 @@ public class GameEngine implements Observer { //motor do jogo, é observador da 
     private Room currentRoom;
     private int lastTickProcessed = 0; //quantos ticks ja foram tratados pelo motor
 
-    private Room getRoom(){ // acrescentamos este metodo para ter acesso ao room
+    public Room getRoom(){ // acrescentamos este metodo para ter acesso ao room
         return currentRoom;
     }
 
