@@ -17,4 +17,8 @@ public class Wall extends GameObject {
     public int getLayer() {
         return 2;
     }
+
+    public boolean isSolid(){
+        return true;
+    }
 }
