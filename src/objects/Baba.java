@@ -30,8 +30,4 @@ public class Baba extends GameObject {
         if()
         setPosition(newPosition);
     }
-
-    public boolean isSolid(){
-        return false;
-    }
 }

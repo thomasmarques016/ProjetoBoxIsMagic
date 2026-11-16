@@ -20,7 +20,4 @@ public class Dirt extends GameObject {
         return 0;
     }
 
-    public boolean isSolid(){
-        return false;
-    }
 }

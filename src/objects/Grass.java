@@ -20,7 +20,4 @@ public class Grass extends GameObject{
         return 1;
     }
 
-    public boolean isSolid(){
-        return false;
-    }
 }
