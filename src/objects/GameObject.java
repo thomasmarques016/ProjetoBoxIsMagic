@@ -26,4 +26,6 @@ public abstract class GameObject implements ImageTile{
 
     @Override 
     public abstract int getLayer();
+
+    public boolean isSolid();
 }

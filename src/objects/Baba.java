@@ -26,8 +26,6 @@ public class Baba extends GameObject {
     }
 
     public void move(Direction d) {
-        //Random rand = new Random();
-        //setPosition(new Point2D(rand.nextInt(10), rand.nextInt(10)));
         Point2D newPosition = getPosition().plus(d.asVector());
         setPosition(newPosition);
     }
