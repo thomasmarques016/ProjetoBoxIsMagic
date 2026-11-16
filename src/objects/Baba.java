@@ -27,6 +27,7 @@ public class Baba extends GameObject {
 
     public void move(Direction d) {
         Point2D newPosition = getPosition().plus(d.asVector());
+        if()
         setPosition(newPosition);
     }
 
