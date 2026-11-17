@@ -144,16 +144,17 @@ public class Room {
     }
         
       
-    public boolean moveObject(GameObject go, Direction d){
+    public boolean moveObject(GameObject gameObject, Direction d){ //funcao recusiva
 
-        Point2D newPosition = go.getPosition().plus(d.asVector());
+        Point2D newPosition = gameObject.getPosition().plus(d.asVector());
         if(isBlocked(newPosition)){return false;}
         for(GameObject o : getPushables(newPosition)){
-            if(!moveObject(o, d)){
+            boolean conseguiu = moveObject(o, d);
+            if(!conseguiu){
                 return false;
             }
         }
-        go.setPosition(newPosition);
+        gameObject.setPosition(newPosition);
         return true;
     }
 
