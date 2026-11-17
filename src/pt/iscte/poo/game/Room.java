@@ -18,7 +18,6 @@ import objects.Grass;
 import objects.Hole;
 import objects.Rock;
 import objects.Wall;
-import objects.Word;
 import objects.WordBox;
 import objects.WordIs;
 import objects.WordWin;
