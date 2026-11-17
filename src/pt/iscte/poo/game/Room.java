@@ -59,7 +59,6 @@ public class Room {
     public static Room readRoom(File f) {
         Room r = new Room();
         r.setName(f.getName());
-        
         try{
         Scanner sc = new Scanner(f);
         int cols = 0;
