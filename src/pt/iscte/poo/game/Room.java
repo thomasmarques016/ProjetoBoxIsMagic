@@ -139,7 +139,7 @@ public class Room {
     public void move(Direction d) {
         
         Baba baba = getPlayer();
-        //baba.
+        baba.setDirection(d);
         Point2D newPosition = baba.getPosition().plus(d.asVector());
 
         if(isOutOfBounds(newPosition)) return;

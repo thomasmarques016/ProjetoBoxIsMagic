@@ -33,41 +33,5 @@ public class Baba extends GameObject {
 		this.direction= d.getLetter();
 	}
 
-<<<<<<< HEAD
-        /*if(d == Direction.UP) this.direction= "u"; // meter um metodo no direction
-        else if ( d == Direction.LEFT) this.direction= "l";
-        else if ( d == Direction.RIGHT) this.direction= "r";
-        else this.direction= "d";*/
-        
-        
-        Room roomAtual = GameEngine.getInstance().getRoom();
-        List<ImageTile> objects = roomAtual.getObjects();
-        Point2D newPosition = getPosition().plus(d.asVector());
-
-        if(isOutOfBounds(newPosition)) return;
-        for(ImageTile o : objects){
-            if((o.getPosition().equals(newPosition) && ((GameObject) o).isSolid())){
-                return;
-            }
-        }
-
-
-        
-        setPosition(newPosition);
-    }
-
-    public boolean isOutOfBounds(Point2D newPosition){
-        int x = newPosition.getX();
-        int y = newPosition.getY();
-        Room r = GameEngine.getInstance().getRoom();
-        int xSala = r.getX();
-        int ySala = r.getY();
-        if(x < 0 || x >= xSala || y < 0 || y >= ySala){
-            return true;
-        }
-        return false;
-    }
-=======
->>>>>>> a9316bfd2a5866d7e4725d618bddf95f2ec97b35
 }
 
