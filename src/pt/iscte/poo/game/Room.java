@@ -152,7 +152,6 @@ public class Room {
             if(!moveObject(o, d)){
                 return false;
             }
-            o.setPosition(newPosition);
         }
         go.setPosition(newPosition);
         return true;
