@@ -29,7 +29,7 @@ public class Baba extends GameObject {
         return 25;
     }
 
-    public void move(Direction d) {
+    /*public void move(Direction d) {
 
         if(d == Direction.UP) this.direction= "u"; // meter um metodo no direction
         else if ( d == Direction.LEFT) this.direction= "l";
@@ -64,4 +64,6 @@ public class Baba extends GameObject {
         }
         return false;
     }
+        /* */
 }
+
