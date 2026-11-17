@@ -31,7 +31,7 @@ public class Baba extends GameObject {
 
     public void move(Direction d) {
 
-        if(d == Direction.UP) this.direction= "u";
+        if(d == Direction.UP) this.direction= "u"; // meter um metodo no direction
         else if ( d == Direction.LEFT) this.direction= "l";
         else if ( d == Direction.RIGHT) this.direction= "r";
         else this.direction= "d";
