@@ -2,7 +2,7 @@ package objects;
 
 import pt.iscte.poo.utils.Point2D;
 
-public class Rock extends GameObject implements Pushable{
+public class Rock extends GameObject {
     
     public Rock(Point2D position) {
         super(position);

@@ -30,4 +30,8 @@ public abstract class GameObject implements ImageTile{
     public boolean isSolid(){
         return false;
     }
+
+    public boolean isPushable(){
+        return false;
+    }
 }

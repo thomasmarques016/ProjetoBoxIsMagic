@@ -2,7 +2,7 @@ package objects;
 
 import pt.iscte.poo.utils.Point2D;
 
-public abstract class Word extends GameObject implements Pushable{
+public abstract class Word extends GameObject{
     
     private String word;   // "box", "is", "win", "move" ou "stop"
 
@@ -26,5 +26,10 @@ public abstract class Word extends GameObject implements Pushable{
     @Override
     public int getLayer() {
         return 3;
+    }
+
+    @Override
+    public boolean isPushable(){
+        return true;
     }
 }

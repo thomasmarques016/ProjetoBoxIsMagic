@@ -2,7 +2,7 @@ package objects;
 
 import pt.iscte.poo.utils.Point2D;
 
-public class Box extends GameObject implements Pushable{
+public class Box extends GameObject {
 
     public Box(Point2D position) {
         super(position);
@@ -19,5 +19,7 @@ public class Box extends GameObject implements Pushable{
     public int getLayer() {
         return 3;
     }
+
+    
     
 }

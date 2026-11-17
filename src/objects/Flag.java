@@ -2,7 +2,7 @@ package objects;
 
 import pt.iscte.poo.utils.Point2D;
 
-public class Flag extends GameObject implements Pushable{
+public class Flag extends GameObject {
     
     public Flag(Point2D position) {
         super(position);
