@@ -29,8 +29,11 @@ public class Baba extends GameObject {
         return 25;
     }
 
-    public void move(Direction d) {
+    public void setDirection (Direction d){
+		this.direction= d.getLetter();
+	}
 
+<<<<<<< HEAD
         /*if(d == Direction.UP) this.direction= "u"; // meter um metodo no direction
         else if ( d == Direction.LEFT) this.direction= "l";
         else if ( d == Direction.RIGHT) this.direction= "r";
@@ -64,4 +67,7 @@ public class Baba extends GameObject {
         }
         return false;
     }
+=======
+>>>>>>> a9316bfd2a5866d7e4725d618bddf95f2ec97b35
 }
+

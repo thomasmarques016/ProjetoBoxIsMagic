@@ -65,7 +65,7 @@ public enum Direction implements Serializable {
 		throw new IllegalArgumentException();	
 	}
 
-	public String getDirection(){
+	public String getLetter(){
 		switch (this) {
 			case UP: return "u";
 			case DOWN : return "d";
