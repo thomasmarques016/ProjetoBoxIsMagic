@@ -5,10 +5,12 @@ import pt.iscte.poo.utils.Point2D;
 public abstract class Word extends GameObject{
     
     private String word;   // "box", "is", "win", "move" ou "stop"
+    private WordType tipo;
 
-    public Word(Point2D position, String word) {
+    public Word(Point2D position, String word, WordType tipo) {
         super(position);
         this.word = word;
+        this.tipo = tipo;
     }
     
     public String getWord() {

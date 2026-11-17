@@ -4,6 +4,6 @@ import pt.iscte.poo.utils.Point2D;
 
 public class WordIs extends Word {
     public WordIs(Point2D p){
-        super(p, "is");
+        super(p, "is", WordType.VERBO);
     }
 }
