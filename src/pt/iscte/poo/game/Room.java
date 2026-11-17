@@ -140,18 +140,42 @@ public class Room {
         
         Baba baba = getPlayer();
         baba.setDirection(d);
-        Point2D newPosition = baba.getPosition().plus(d.asVector());
+        moveObject(baba, d);
+    }
+        
+      
+    public boolean moveObject(GameObject go, Direction d){
 
-        if(isOutOfBounds(newPosition)) return;
+        Point2D newPosition = go.getPosition().plus(d.asVector());
+        if(isBlocked(newPosition)){return false;}
+        for(GameObject o : getPushables(newPosition)){
+            if(!moveObject(o, d)){
+                return false;
+            }
+            o.setPosition(newPosition);
+        }
+        go.setPosition(newPosition);
+        return true;
+    }
+
+    public boolean isBlocked(Point2D pos){
+        if(isOutOfBounds(pos)) return true; //se sair do mapa é uma posição bloqueada
         for(ImageTile o : objects){
-            if((o.getPosition().equals(newPosition) && ((GameObject) o).isSolid())){
-                return;
+            if((o.getPosition().equals(pos) && ((GameObject) o).isSolid())){
+                return true;
             }
         }
+        return false;
+    }
 
-
-        
-        baba.setPosition(newPosition);
+    private List<GameObject> getPushables(Point2D pos){
+        List<GameObject> pushables = new ArrayList<>();
+        for(ImageTile o : objects){
+            if(o.getPosition().equals(pos) && ((GameObject) o).isPushable()){
+                pushables.add((GameObject) o);
+            }
+        }
+        return pushables;
     }
 
     public boolean isOutOfBounds(Point2D newPosition){
