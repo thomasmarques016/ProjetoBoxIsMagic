@@ -1,5 +1,6 @@
 package pt.iscte.poo.utils;
 
+import java.awt.Dimension;
 import java.awt.event.KeyEvent;
 import java.io.Serializable;
 import java.util.Random;
@@ -62,5 +63,14 @@ public enum Direction implements Serializable {
 			if (v.equals(d.asVector()))
 				return d;
 		throw new IllegalArgumentException();	
+	}
+
+	public String getDirection(){
+		switch (this) {
+			case UP: return "u";
+			case DOWN : return "d";
+			case LEFT : return "l";
+			default :  return "r";
+		}
 	}
 }
