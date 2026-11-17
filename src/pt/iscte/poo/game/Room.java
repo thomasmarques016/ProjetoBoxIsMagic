@@ -99,11 +99,11 @@ public class Room {
         else if (comp[0].equals("bomb")) r.addObject(new Bomb(posicao));
         else if (comp[0].equals("box"))  r.addObject(new Box(posicao));
         else if (comp[0].equals( "flag")) r.addObject(new Flag(posicao));
-        /*else if (comp[0].equals("wordBox")) r.addObject(new WordBox(posicao));
+        else if (comp[0].equals("wordBox")) r.addObject(new WordBox(posicao));
         else if (comp[0].equals("wordIs")) r.addObject(new WordIs(posicao));
         else if (comp[0].equals("wordWin")) r.addObject(new WordWin(posicao));
         else if (comp[0].equals("wordMove")) r.addObject(new WordMove(posicao));
-        else if (comp[0].equals("wordStop")) r.addObject(new WordStop(posicao));/* */
+        else if (comp[0].equals("wordStop")) r.addObject(new WordStop(posicao));
         }
         catch(NumberFormatException | IndexOutOfBoundsException e){
             System.err.println("Erro na linha: " + linha);
