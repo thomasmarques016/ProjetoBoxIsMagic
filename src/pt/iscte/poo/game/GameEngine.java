@@ -38,7 +38,8 @@ public class GameEngine implements Observer { //motor do jogo, é observador da 
 
             if (k == KeyEvent.VK_LEFT || k == KeyEvent.VK_RIGHT || k == KeyEvent.VK_UP || k == KeyEvent.VK_DOWN) { //A tecla pressionada foi uma seta?
                 Direction d = Direction.directionFor(k); //Se sim, guardamos a direcao
-                getPlayer().move(d); //mover baba
+                //getPlayer().move(d); //mover baba
+                currentRoom.move(d);
                 updateGUI(); //atualizar a posicao nova do baba, não aparece na janela, ou seja é guardado em memória
             }
         }

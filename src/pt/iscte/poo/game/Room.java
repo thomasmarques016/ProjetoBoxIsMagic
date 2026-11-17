@@ -25,6 +25,7 @@ import objects.WordWin;
 import objects.WordMove;
 import objects.WordStop;
 import pt.iscte.poo.gui.ImageTile;
+import pt.iscte.poo.utils.Direction;
 import pt.iscte.poo.utils.Point2D;
 
 public class Room {
@@ -133,5 +134,34 @@ public class Room {
     
     public Baba getPlayer() {
         return player;
+    }
+
+    public void move(Direction d) {
+        
+        Baba baba = getPlayer();
+        //baba.
+        Point2D newPosition = baba.getPosition().plus(d.asVector());
+
+        if(isOutOfBounds(newPosition)) return;
+        for(ImageTile o : objects){
+            if((o.getPosition().equals(newPosition) && ((GameObject) o).isSolid())){
+                return;
+            }
+        }
+
+
+        
+        baba.setPosition(newPosition);
+    }
+
+    public boolean isOutOfBounds(Point2D newPosition){
+        int xPos = newPosition.getX();
+        int yPos = newPosition.getY();
+        int xSala = this.getX();
+        int ySala = this.getY();
+        if(xPos < 0 || xPos >= xSala || yPos < 0 || yPos >= ySala){
+            return true;
+        }
+        return false;
     }
 }
