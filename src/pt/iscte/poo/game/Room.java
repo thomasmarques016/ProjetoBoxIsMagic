@@ -19,6 +19,11 @@ import objects.Hole;
 import objects.Rock;
 import objects.Wall;
 import objects.Word;
+import objects.WordBox;
+import objects.WordIs;
+import objects.WordWin;
+import objects.WordMove;
+import objects.WordStop;
 import pt.iscte.poo.gui.ImageTile;
 import pt.iscte.poo.utils.Point2D;
 
