@@ -17,9 +17,6 @@ public class GameEngine implements Observer { //motor do jogo, é observador da 
     private Room currentRoom;
     private int lastTickProcessed = 0; //quantos ticks ja foram tratados pelo motor
 
-    public Room getRoom(){ // acrescentamos este metodo para ter acesso ao room
-        return currentRoom;
-    }
 
     private GameEngine() {
         currentRoom = Room.readRoom(new File(ROOMS_DIRECTORY + "/room0.txt")); //vai ver o mapa     VER SE FICA SEMPRE AQ, O MAPA TEM DE MUDAR
