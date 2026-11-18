@@ -237,4 +237,14 @@ public class Room {
         }
         return false;
     }
+
+    public boolean isWin(Point2D pos){
+        for(ImageTile o : objects){
+            GameObject gameObject = ((GameObject) o);
+            if(o.getPosition().equals(pos) && (gameObject instanceof Flag || hasRule(gameObject.getName(), "is", "win"))){
+                return true;
+            }
+        }
+        return false;
+    }
 }
