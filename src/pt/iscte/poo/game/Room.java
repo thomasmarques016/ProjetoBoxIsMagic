@@ -190,7 +190,11 @@ public class Room {
         return false;
     }
 
-    public void add
+    public void addRules(){
+        for(ImageTile o : objects){
+            if((GameObject) o instanceof Word)
+        }
+    }
 
     public boolean hasRule(String name, String rule){
         
