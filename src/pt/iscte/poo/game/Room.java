@@ -145,7 +145,6 @@ public class Room {
         baba.setDirection(d);
         moveObject(baba, d);
         updateRules();
-        if(isWin()) u
     }
         
       
@@ -167,7 +166,7 @@ public class Room {
         if(isOutOfBounds(pos)) return true; //se sair do mapa é uma posição bloqueada
         for(ImageTile o : objects){
             GameObject gameObject = ((GameObject) o);
-            if((gameObject.getPosition().equals(pos) && (gameObject.isSolid()) || hasRule(gameObject.getNameWithoutTraco(), "is", "stop"))){
+            if((gameObject.getPosition().equals(pos) && (gameObject.isSolid() || hasRule(gameObject.getNameWithoutTraco(), "is", "stop")))){
                 return true;
             }
         }
@@ -230,19 +229,13 @@ public class Room {
     }
 
     public boolean hasRule(String name, String connecter, String rule){
-        String regra = name + connecter + rule;
-        for(String r : rules){
-            if(r.equals(regra)){
-                return true;
-            }
-        }
-        return false;
+        return rules.contains(name+ connecter + rule);
     }
 
-    public boolean isWin(Point2D pos){
+    public boolean isWin(){
         for(ImageTile o : objects){
             GameObject gameObject = ((GameObject) o);
-            if(o.getPosition().equals(pos) && (gameObject instanceof Flag || hasRule(gameObject.getNameWithoutTraco(), "is", "win"))){
+            if(o.getPosition().equals(getPlayer().getPosition()) && (gameObject instanceof Flag || hasRule(gameObject.getNameWithoutTraco(), "is", "win"))){
                 return true;
             }
         }

@@ -27,5 +27,10 @@ public class Bomb extends GameObject implements Tickable{
     public int getLayer(){
         return 3;
     }
+
+    @Override
+    public boolean isPushable(){
+        return true;
+    }
     
 }

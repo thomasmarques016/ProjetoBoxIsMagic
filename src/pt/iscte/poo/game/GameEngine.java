@@ -13,13 +13,15 @@ public class GameEngine implements Observer { //motor do jogo, é observador da 
 
     private static GameEngine INSTANCE = new GameEngine(); //cria motor do jogo
     private static final String ROOMS_DIRECTORY = "rooms"; 
+    private int level;
 
     private Room currentRoom;
     private int lastTickProcessed = 0; //quantos ticks ja foram tratados pelo motor
 
 
     private GameEngine() {
-        currentRoom = Room.readRoom(new File(ROOMS_DIRECTORY + "/room0.txt")); //vai ver o mapa     VER SE FICA SEMPRE AQ, O MAPA TEM DE MUDAR
+        this.level = 0;
+        currentRoom = Room.readRoom(new File(ROOMS_DIRECTORY + "/room" + level + ".txt")); //vai ver o mapa     VER SE FICA SEMPRE AQ, O MAPA TEM DE MUDAR
         updateGUI(); //desenhar mapa
     }
 
@@ -37,6 +39,7 @@ public class GameEngine implements Observer { //motor do jogo, é observador da 
                 Direction d = Direction.directionFor(k); //Se sim, guardamos a direcao
                 //getPlayer().move(d); //mover baba
                 currentRoom.move(d);
+                if(currentRoom.isWin()) levelUp();
                 updateGUI(); //atualizar a posicao nova do baba, não aparece na janela, ou seja é guardado em memória
             }
         }
@@ -61,5 +64,10 @@ public class GameEngine implements Observer { //motor do jogo, é observador da 
 
     public Baba getPlayer() {
         return currentRoom.getPlayer(); 
+    }
+
+    public void levelUp(){
+        level++;
+        this.currentRoom = Room.readRoom(new File(ROOMS_DIRECTORY + "/room" + level + ".txt"));
     }
 }
