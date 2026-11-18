@@ -190,7 +190,7 @@ public class Room {
         return false;
     }
 
-    
+    public void add
 
     public boolean hasRule(String name, String rule){
         
