@@ -35,8 +35,7 @@ public abstract class Word extends GameObject{
         return true;
     }
 
-    @Override 
-    public String getNameWithoutTraco(){
-        return "word";
-    }
+    public WordType tipo(){
+        return this.tipo;
+    } 
 }

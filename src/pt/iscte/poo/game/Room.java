@@ -20,11 +20,13 @@ import objects.Grass;
 import objects.Hole;
 import objects.Rock;
 import objects.Wall;
+import objects.Word;
 import objects.WordBox;
 import objects.WordIs;
 import objects.WordWin;
 import objects.WordMove;
 import objects.WordStop;
+import objects.WordType;
 import pt.iscte.poo.gui.ImageTile;
 import pt.iscte.poo.utils.Direction;
 import pt.iscte.poo.utils.Point2D;
@@ -51,7 +53,7 @@ public class Room {
         return roomName;
     }
 
-    public void addObject(ImageTile obj) { // alterei para gameObject em vez de ImageTile
+    public void addObject(ImageTile obj) { 
         objects.add(obj);
     }
 
@@ -121,15 +123,15 @@ public class Room {
         catch( FileNotFoundException e){
             throw new IllegalArgumentException("Ficheiro nao encontrado");
         }
-        
+        r.updateRules(); // podem ja estar regras formadas sem nenhum movimento
         return r;
     }
 
-    public int getX(){ // dimensao
+    public int getX(){ // dimensao da sala
         return this.x;
     }
 
-    public int getY(){
+    public int getY(){ // dimensao da sala
          return this.y;
     }
     
@@ -142,6 +144,7 @@ public class Room {
         Baba baba = getPlayer();
         baba.setDirection(d);
         moveObject(baba, d);
+        updateRules();
     }
         
       
@@ -162,7 +165,8 @@ public class Room {
     public boolean isBlocked(Point2D pos){
         if(isOutOfBounds(pos)) return true; //se sair do mapa é uma posição bloqueada
         for(ImageTile o : objects){
-            if((o.getPosition().equals(pos) && ((GameObject) o).isSolid())){
+            GameObject gameObject = ((GameObject) o);
+            if((gameObject.getPosition().equals(pos) && (gameObject.isSolid()) || hasRule(gameObject.getName(), "is", "stop"))){
                 return true;
             }
         }
@@ -172,7 +176,8 @@ public class Room {
     private List<GameObject> getPushables(Point2D pos){
         List<GameObject> pushables = new ArrayList<>();
         for(ImageTile o : objects){
-            if(o.getPosition().equals(pos) && ((GameObject) o).isPushable()){
+            GameObject gameObject = ((GameObject) o);
+            if(gameObject.getPosition().equals(pos) && (gameObject.isPushable() || hasRule(gameObject.getName(), "is", "move"))){
                 pushables.add((GameObject) o);
             }
         }
@@ -190,13 +195,46 @@ public class Room {
         return false;
     }
 
-    public void addRules(){
-        for(ImageTile o : objects){
-            if((GameObject) o instanceof Word)
+    public void checkRule(Point2D pos, Direction d){
+        Word verb = getObjWord(pos);
+        Word before = getObjWord(pos.plus(d.asVector()));
+        Word after = getObjWord(pos.plus((d.opposite().asVector())));
+            
+        if(before != null && after != null && before.tipo() == WordType.SUJEITO && after.tipo() == WordType.PROPRIEDADE){
+            rules.add(before.getWord() + verb.getWord() + after.getWord());
         }
     }
 
-    public boolean hasRule(String name, String rule){
-        
+    public void updateRules(){
+        rules.clear();   // apaga as regras antigas antes de voltar a ler
+        for(ImageTile o : objects){
+            if (isWord((GameObject) o) && ((Word) o).tipo() == WordType.VERBO) { //
+                checkRule(o.getPosition(), Direction.LEFT);
+                checkRule(o.getPosition(), Direction.UP);
+            }
+        }
+    }
+
+    public boolean isWord( GameObject obj){
+        return obj instanceof Word;
+    } 
+
+    public Word getObjWord( Point2D pos){
+        for(ImageTile o : objects){
+            if (o.getPosition().equals(pos) && (((GameObject) o) instanceof Word)) {
+               return (Word) o; 
+            }
+        }
+        return null;
+    }
+
+    public boolean hasRule(String name, String connecter, String rule){
+        String regra = name + connecter + rule;
+        for(String r : rules){
+            if(r.equals(regra)){
+                return true;
+            }
+        }
+        return false;
     }
 }

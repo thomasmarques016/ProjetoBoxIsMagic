@@ -28,7 +28,7 @@ public abstract class GameObject implements ImageTile{
     public abstract int getLayer();
 
     public boolean isSolid(){
-        return ;
+        return false;
     }
 
     public boolean isPushable(){
