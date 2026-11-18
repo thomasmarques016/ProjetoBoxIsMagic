@@ -241,4 +241,8 @@ public class Room {
         }
         return false;
     }
+
+    public void explodeBomb(){
+
+    }
 }
