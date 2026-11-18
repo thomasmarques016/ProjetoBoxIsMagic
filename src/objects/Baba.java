@@ -33,5 +33,10 @@ public class Baba extends GameObject {
 		this.direction= d.getLetter();
 	}
 
+    @Override 
+    public String getNameWithoutTraco(){
+        return "baba";
+    }
+
 }
 

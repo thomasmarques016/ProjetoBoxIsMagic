@@ -4,8 +4,10 @@ import java.awt.Dimension;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Scanner;
+import java.util.Set;
 
 import objects.Baba;
 import objects.Bomb;
@@ -32,6 +34,7 @@ public class Room {
     private List<ImageTile> objects;
     private String roomName;
     private Baba player;
+    private Set<String> rules = new HashSet<>(); //adicionamos para as rules ativas. E um set para nao haverem regras repetidas
 
     private int x;
     private int y;
@@ -185,5 +188,11 @@ public class Room {
             return true;
         }
         return false;
+    }
+
+    
+
+    public boolean hasRule(String name, String rule){
+        
     }
 }

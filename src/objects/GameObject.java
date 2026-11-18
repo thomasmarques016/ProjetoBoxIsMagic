@@ -28,10 +28,14 @@ public abstract class GameObject implements ImageTile{
     public abstract int getLayer();
 
     public boolean isSolid(){
-        return false;
+        return ;
     }
 
     public boolean isPushable(){
         return false;
+    }
+
+    public String getNameWithoutTraco(){
+        return getName();
     }
 }

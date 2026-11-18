@@ -34,4 +34,9 @@ public abstract class Word extends GameObject{
     public boolean isPushable(){
         return true;
     }
+
+    @Override 
+    public String getNameWithoutTraco(){
+        return "word";
+    }
 }
