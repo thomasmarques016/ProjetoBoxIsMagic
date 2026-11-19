@@ -19,6 +19,7 @@ import objects.GameObject;
 import objects.Grass;
 import objects.Hole;
 import objects.Rock;
+import objects.Tickable;
 import objects.Wall;
 import objects.Word;
 import objects.WordBox;
@@ -270,6 +271,24 @@ public class Room {
 
     public boolean isBabaAlive(){
         return this.playerIsAlive;
+    }
+
+    public void tick(){
+        List<Tickable> areGoingToExplode = new ArrayList<>();
+
+        for(ImageTile o : objects){
+            if(o instanceof Tickable){
+                ((Tickable)o).tick();
+            }
+
+            if(o instanceof Bomb && ((Bomb)o).isGoingToExplode()){
+                areGoingToExplode.add((Bomb)o);
+            }
+        }
+
+        for(Tickable b : areGoingToExplode){
+            explodeBomb(((Bomb)b).getPosition());
+        }
     }
 
 
