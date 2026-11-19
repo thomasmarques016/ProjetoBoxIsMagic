@@ -31,10 +31,6 @@ public class Bomb extends GameObject implements Tickable{
         return true;
     }
 
-    public void acenderBomba(){
-        this.isActive = true;
-    }
-
     @Override 
     public void tick(){
         if(this.isActive && this.ticksLeft > 0)
@@ -43,6 +39,11 @@ public class Bomb extends GameObject implements Tickable{
 
     public boolean isGoingToExplode(){
         return this.isActive && this.ticksLeft == 0;
+    }
+
+    @Override 
+    public void pushedByBaba(){
+        this.isActive = true;
     }
     
 }

@@ -157,6 +157,7 @@ public class Room {
             if(!conseguiu){
                 return false;
             }
+            if(gameObject==player) o.pushedByBaba();
         }
         gameObject.setPosition(newPosition);
         return true;

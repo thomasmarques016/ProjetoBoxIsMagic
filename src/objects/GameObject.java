@@ -38,4 +38,8 @@ public abstract class GameObject implements ImageTile{
     public String getNameWithoutTraco(){
         return getName();
     }
+
+    public void pushedByBaba(){
+        
+    }
 }
