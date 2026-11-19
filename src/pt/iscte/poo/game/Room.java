@@ -242,7 +242,21 @@ public class Room {
         return false;
     }
 
-    public void explodeBomb(){
+    public void explodeBomb(Point2D pos){
+        List<Point2D> posAdjacentes = pos.getNeighbourhoodPoints();
+        List<ImageTile> objARemover = new ArrayList<>();
+        List<ImageTile> objASubstituir = new ArrayList<>();
 
+        //adicionar à lista os objetos que vamos remover
+        for(ImageTile o : objects){
+            if(posAdjacentes.contains(o.getPosition()) && !(((GameObject)o) instanceof Dirt)){
+                if(((GameObject)o) instanceof Wall){
+                    objASubstituir.add(o);
+                }
+                objARemover.add(o);
+            }
+        }
+        this.objects.removeAll(objARemover);
+        this.objects.addAll(objASubstituir);
     }
 }
