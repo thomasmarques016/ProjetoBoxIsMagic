@@ -244,7 +244,7 @@ public class Room {
     }
 
     public void explodeBomb(Point2D pos){
-        List<Point2D> posAdjacentes = pos.getNeighbourhoodPoints();
+        List<Point2D> posAdjacentes = pos.getWideNeighbourhoodPoints();
         List<ImageTile> objARemover = new ArrayList<>();
         List<ImageTile> objASubstituir = new ArrayList<>();
 
@@ -252,12 +252,13 @@ public class Room {
         for(ImageTile o : objects){
             if(posAdjacentes.contains(o.getPosition()) && !(((GameObject)o) instanceof Dirt)){
                 if(((GameObject)o) instanceof Wall){
-                    objASubstituir.add(o);
+                    objASubstituir.add(new CrackedWall(o.getPosition()));
                 }
                 objARemover.add(o);
             }
         }
         this.objects.removeAll(objARemover);
         this.objects.addAll(objASubstituir);
+
     }
 }
