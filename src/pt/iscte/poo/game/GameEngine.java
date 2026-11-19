@@ -21,7 +21,7 @@ public class GameEngine implements Observer { //motor do jogo, é observador da 
 
     private GameEngine() {
         this.level = 0;
-        currentRoom = Room.readRoom(new File(ROOMS_DIRECTORY + "/room" + level + ".txt")); //vai ver o mapa     VER SE FICA SEMPRE AQ, O MAPA TEM DE MUDAR
+        currentRoom = Room.readRoom(new File(ROOMS_DIRECTORY + "/room" + level + ".txt")); //vai ver o mapa   
         updateGUI(); //desenhar mapa
     }
 
@@ -69,5 +69,9 @@ public class GameEngine implements Observer { //motor do jogo, é observador da 
     public void levelUp(){
         level++;
         this.currentRoom = Room.readRoom(new File(ROOMS_DIRECTORY + "/room" + level + ".txt"));
+    }
+
+    public void restartLevel(){
+        currentRoom = Room.readRoom(new File(ROOMS_DIRECTORY + "/room" + level + ".txt"));
     }
 }
