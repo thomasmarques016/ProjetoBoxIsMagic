@@ -38,6 +38,7 @@ public class Room {
     private Baba player;
     private Set<String> rules = new HashSet<>(); //adicionamos para as rules ativas. E um set para nao haverem regras repetidas
 
+    private boolean playerIsAlive = true;
     private int x;
     private int y;
 
@@ -244,21 +245,32 @@ public class Room {
     }
 
     public void explodeBomb(Point2D pos){
-        List<Point2D> posAdjacentes = pos.getWideNeighbourhoodPoints();
+        List<Point2D> posAExplodir = pos.getWideNeighbourhoodPoints();
         List<ImageTile> objARemover = new ArrayList<>();
         List<ImageTile> objASubstituir = new ArrayList<>();
 
-        //adicionar à lista os objetos que vamos remover
+        posAExplodir.add(pos);
+
+        //adicionar a lista os objetos que vamos remover e substituir as Wall por CrackedWalls
         for(ImageTile o : objects){
-            if(posAdjacentes.contains(o.getPosition()) && !(((GameObject)o) instanceof Dirt)){
+            if(posAExplodir.contains(o.getPosition()) && !(((GameObject)o) instanceof Dirt)){
                 if(((GameObject)o) instanceof Wall){
                     objASubstituir.add(new CrackedWall(o.getPosition()));
                 }
                 objARemover.add(o);
             }
         }
+        if(posAExplodir.contains(getPlayer().getPosition())){
+            this.playerIsAlive = false;
+        }
         this.objects.removeAll(objARemover);
         this.objects.addAll(objASubstituir);
 
     }
+
+    public boolean isBabaAlive(){
+        return this.playerIsAlive;
+    }
+
+
 }
