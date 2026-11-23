@@ -266,6 +266,7 @@ public class Room {
         }
         this.objects.removeAll(objARemover);
         this.objects.addAll(objASubstituir);
+        updateRules();
 
     }
 
