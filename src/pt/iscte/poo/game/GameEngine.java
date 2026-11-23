@@ -52,6 +52,9 @@ public class GameEngine implements Observer { //motor do jogo, é observador da 
 
     private void processTick() {
         lastTickProcessed++;
+        currentRoom.tick();
+        if(!currentRoom.isBabaAlive()) restartLevel();
+        updateGUI();
     }
 
     public void updateGUI() {
