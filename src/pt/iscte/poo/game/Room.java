@@ -20,6 +20,7 @@ import objects.Grass;
 import objects.Hole;
 import objects.Rock;
 import objects.Tickable;
+import objects.Trigger;
 import objects.Wall;
 import objects.Word;
 import objects.WordBox;
@@ -178,10 +179,12 @@ public class Room {
                 return false; //cancela o movimento desse obj e consequentemente dos de tras
             }
 
-            if(gameObject==player){ //ve se foi o baba que empurrou diretamenre o objeto
-                o.pushedByBaba(); //notifica o objeto que foi empurrado pelo baba(ate agora so a bomba e que tem comportamento definido)
-            } 
+            if(gameObject instanceof Trigger){ //ve se foi um trigger que empurrou o objeto
+                if(o instanceof Bomb){ //se for uma bomba
+                    ((Bomb)o).acender(); //ativa a bomba
+                } 
         }
+    }
         gameObject.setPosition(newPosition); // como o objeto pode mover, atualiza a posicao do objeto
         return true; //confirma que o objeto se moveu
     }

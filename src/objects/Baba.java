@@ -10,7 +10,7 @@ import pt.iscte.poo.utils.Vector2D;
 import java.util.List;
 import java.util.Random;
 
-public class Baba extends GameObject {
+public class Baba extends GameObject implements Trigger{
 
     private String direction;
 
