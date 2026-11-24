@@ -4,6 +4,8 @@ import pt.iscte.poo.utils.Point2D;
 
 public class Box extends GameObject {
 
+    private boolean isStuck = false;
+
     public Box(Point2D position) {
         super(position);
     }
@@ -20,6 +22,13 @@ public class Box extends GameObject {
         return 3;
     }
 
-    
+    @Override
+    public boolean isStuck(){
+        return this.isStuck;
+    }
+
+    public void fallInHole(){
+        this.isStuck = true;
+    }
     
 }

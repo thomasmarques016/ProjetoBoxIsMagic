@@ -314,4 +314,18 @@ public class Room {
             explodeBomb(((Bomb)b).getPosition());
         }
     }
+
+    private GameObject getObj(Point2D pos){
+        for(GameObject o : objects){
+            if(o.getPosition().equals(pos)){
+                return o;
+            }
+        }
+        return null;
+    }
+
+    public void fallInHole(Point2D pos){
+        GameObject o = getObj(pos);
+        
+    }
 }

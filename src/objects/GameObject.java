@@ -39,4 +39,8 @@ public abstract class GameObject implements ImageTile{
         return getName();
     }
 
+    public boolean isStuck(){
+        return false;
+    }
+
 }
