@@ -39,7 +39,5 @@ public abstract class GameObject implements ImageTile{
         return getName();
     }
 
-    public void pushedByBaba(){
-        
-    }
+    public void pushedByBaba(){ }
 }

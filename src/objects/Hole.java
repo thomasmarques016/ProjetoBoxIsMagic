@@ -3,6 +3,9 @@ package objects;
 import pt.iscte.poo.utils.Point2D;
 
 public class Hole extends GameObject {
+
+    private boolean covered = true;
+
     public Hole(Point2D position) {
         super(position);
     }
@@ -18,5 +21,11 @@ public class Hole extends GameObject {
     public int getLayer() {
         return 1;
     }
+
+    public boolean isCovered(){
+        return this.covered;
+    }
+
+
 
 }

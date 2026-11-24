@@ -34,10 +34,10 @@ import pt.iscte.poo.utils.Point2D;
 
 public class Room {
 
-    private List<ImageTile> objects;
+    private List<GameObject> objects; //mudamos de ImageTile para GameOject para nao ter que estar constantemente a converter
     private String roomName;
     private Baba player;
-    private Set<String> rules = new HashSet<>(); //adicionamos para as rules ativas. E um set para nao haverem regras repetidas
+    private Set<String> rules = new HashSet<>(); //adicionamos para as rules ativas. E um set para nao haver regras repetidas
 
     private boolean playerIsAlive = true;
     private int x;
@@ -56,10 +56,10 @@ public class Room {
     }
 
     public void addObject(ImageTile obj) { 
-        objects.add(obj);
+        objects.add((GameObject)obj);
     }
 
-    public List<ImageTile> getObjects() {
+    public List<GameObject> getObjects() {
         return objects;
     }
 
@@ -80,9 +80,9 @@ public class Room {
         
 
         for(int i = 0; i < rows; i++){ 
-                String linha = sc.nextLine(); // vai ate á ultima linha indicada na primeira linha do ficheiro
+                String linha = sc.nextLine(); // vai ate a ultima linha indicada na primeira linha do ficheiro
                 for (int j = 0; j< cols; j++){ 
-                    Point2D posicao = new Point2D(j, i); // no enunciado ta que x é a coluna e o y é a linha
+                    Point2D posicao = new Point2D(j, i); // no enunciado ta que x e a coluna e o y e a linha
                     r.addObject(new Dirt(posicao)); // vamos por chao em tudo
                     char c = linha.charAt(j);
                     if(c=='X') r.addObject(new Wall(posicao));
@@ -99,22 +99,15 @@ public class Room {
         if(linha.isEmpty()) continue;
         String [] comp = linha.split(",");
         try{
-            Point2D posicao = new Point2D(Integer.parseInt(comp[1]), Integer.parseInt(comp[2]));
 
-        if(comp[0].equals("baba")){
-            Baba baba = new Baba(posicao, comp[3]);
-            r.addObject(baba);
-            r.player=baba;
-        } 
-        else if (comp[0].equals( "rock")) r.addObject(new Rock(posicao));
-        else if (comp[0].equals("bomb")) r.addObject(new Bomb(posicao));
-        else if (comp[0].equals("box"))  r.addObject(new Box(posicao));
-        else if (comp[0].equals( "flag")) r.addObject(new Flag(posicao));
-        else if (comp[0].equals("wordBox")) r.addObject(new WordBox(posicao));
-        else if (comp[0].equals("wordIs")) r.addObject(new WordIs(posicao));
-        else if (comp[0].equals("wordWin")) r.addObject(new WordWin(posicao));
-        else if (comp[0].equals("wordMove")) r.addObject(new WordMove(posicao));
-        else if (comp[0].equals("wordStop")) r.addObject(new WordStop(posicao));
+            Point2D posicao = new Point2D(Integer.parseInt(comp[1]), Integer.parseInt(comp[2]));
+            GameObject obj = createObject(comp[0], posicao, comp);
+            r.addObject(obj);
+            if(obj instanceof Baba){
+                r.player = (Baba) obj;
+
+            }
+
         }
         catch(NumberFormatException | IndexOutOfBoundsException e){
             System.err.println("Erro na linha: " + linha);
@@ -129,6 +122,24 @@ public class Room {
         return r;
     }
 
+    private static GameObject createObject(String name, Point2D pos, String[] comp){
+        switch (name) {
+            case "baba":     return new Baba(pos, comp[3]);
+            case "rock":     return new Rock(pos);
+            case "bomb":     return new Bomb(pos);
+            case "box":      return new Box(pos);
+            case "flag":     return new Flag(pos);
+            case "wordBox":  return new WordBox(pos);
+            case "wordIs":   return new WordIs(pos);
+            case "wordWin":  return new WordWin(pos);
+            case "wordMove": return new WordMove(pos);
+            case "wordStop": return new WordStop(pos);
+        
+            default:
+                throw new IllegalArgumentException("Objeto desconhecido: " + name);
+        }
+    }
+
     public int getX(){ // dimensao da sala
         return this.x;
     }
@@ -141,54 +152,62 @@ public class Room {
         return player;
     }
 
+
+
     public void move(Direction d) {
         
-        Baba baba = getPlayer();
-        baba.setDirection(d);
-        moveObject(baba, d);
-        updateRules();
+        Baba baba = getPlayer(); //vai buscar o player
+        baba.setDirection(d); //vira o baba para a direcao para onde o mesmo vai andar
+        moveObject(baba, d); //comeca o movimento recursivo do Baba(vai empurar objetos pushable) para direcao 
+        updateRules(); //apos cada movimento, verifica todas as regras da sala
     }
         
       
     public boolean moveObject(GameObject gameObject, Direction d){ //funcao recusiva
 
-        Point2D newPosition = gameObject.getPosition().plus(d.asVector());
-        if(isBlocked(newPosition)){return false;}
-        for(GameObject o : getPushables(newPosition)){
-            boolean conseguiu = moveObject(o, d);
-            if(!conseguiu){
-                return false;
-            }
-            if(gameObject==player) o.pushedByBaba();
+        Point2D newPosition = gameObject.getPosition().plus(d.asVector()); //calcula a nova posicao
+
+        if(isBlocked(newPosition)){ //verifica se a nova posicao esta fora dos limites do mapa e se na nova posicao existe algum objeto solido ou com a regra isStop ativa
+            return false; //nao faz o movimento
         }
-        gameObject.setPosition(newPosition);
-        return true;
+
+        for(GameObject o : getPushables(newPosition)){ //percorre todos os objetos que podem ser empurrados na nova posicao
+            boolean conseguiu = moveObject(o, d); //chamada recursiva: tenta empurrar o objeto da frente na mesma direcao
+
+            if(!conseguiu){ //se o objeto da frente nao se conseguir mover(ex: bateu numa parede)
+                return false; //cancela o movimento desse obj e consequentemente dos de tras
+            }
+
+            if(gameObject==player){ //ve se foi o baba que empurrou diretamenre o objeto
+                o.pushedByBaba(); //notifica o objeto que foi empurrado pelo baba(ate agora so a bomba e que tem comportamento definido)
+            } 
+        }
+        gameObject.setPosition(newPosition); // como o objeto pode mover, atualiza a posicao do objeto
+        return true; //confirma que o objeto se moveu
     }
 
     public boolean isBlocked(Point2D pos){
-        if(isOutOfBounds(pos)) return true; //se sair do mapa é uma posição bloqueada
-        for(ImageTile o : objects){
-            GameObject gameObject = ((GameObject) o);
-            if((gameObject.getPosition().equals(pos) && (gameObject.isSolid() || hasRule(gameObject.getNameWithoutTraco(), "is", "stop")))){
+        if(isOutOfBounds(pos)) return true; //se sair do mapa e uma posicao bloqueada
+        for(GameObject o : objects){
+            if((o.getPosition().equals(pos) && (o.isSolid() || hasRule(o.getNameWithoutTraco(), "is", "stop")))){
                 return true;
             }
         }
         return false;
     }
 
-    private List<GameObject> getPushables(Point2D pos){
-        List<GameObject> pushables = new ArrayList<>();
-        for(ImageTile o : objects){
-            GameObject gameObject = ((GameObject) o);
-            if(gameObject.getPosition().equals(pos) && (gameObject.isPushable() || hasRule(gameObject.getNameWithoutTraco(), "is", "move"))){
+    private List<GameObject> getPushables(Point2D pos){ //vai buscar todos os objetos que podem ser empuarrados numa determinada posicao
+        List<GameObject> pushables = new ArrayList<>(); //cria a lista que vai guardar os objetos empurraveis
+        for(GameObject o : objects){ 
+            if(o.getPosition().equals(pos) && (o.isPushable() || hasRule(o.getNameWithoutTraco(), "is", "move"))){
                 pushables.add((GameObject) o);
             }
         }
         return pushables;
     }
 
-    public boolean isOutOfBounds(Point2D newPosition){
-        int xPos = newPosition.getX();
+    public boolean isOutOfBounds(Point2D newPosition){ //verificar se a nova posicao nao sai do mapa
+        int xPos = newPosition.getX(); 
         int yPos = newPosition.getY();
         int xSala = this.getX();
         int ySala = this.getY();
@@ -198,47 +217,49 @@ public class Room {
         return false;
     }
 
-    public void checkRule(Point2D pos, Direction d){
-        Word verb = getObjWord(pos);
-        Word before = getObjWord(pos.plus(d.asVector()));
-        Word after = getObjWord(pos.plus((d.opposite().asVector())));
+    public void checkRule(Point2D pos, Direction d){ //vai ver se o mapa existe a regra se sim adiciona-a a lista de regras
+
+        Word verb = getObjWord(pos); //vai buscar a palavra do meio
+        Word before = getObjWord(pos.plus(d.asVector())); //vai buscar a palavra no bloco antes
+        Word after = getObjWord(pos.plus((d.opposite().asVector()))); //vai buscar a palavra no bloco depois, utilizando o opposite
             
         if(before != null && after != null && before.tipo() == WordType.SUJEITO && after.tipo() == WordType.PROPRIEDADE){
-            rules.add(before.getWord() + verb.getWord() + after.getWord());
+            rules.add(before.getWord() + verb.getWord() + after.getWord()); //se formar uma frase adiciona regra a lista
         }
     }
 
-    public void updateRules(){
-        rules.clear();   // apaga as regras antigas antes de voltar a ler
-        for(ImageTile o : objects){
-            if (isWord((GameObject) o) && ((Word) o).tipo() == WordType.VERBO) { //
-                checkRule(o.getPosition(), Direction.LEFT);
-                checkRule(o.getPosition(), Direction.UP);
+    public void updateRules(){ //chama o checkRule para ver se existe alguma regra a adicionar
+
+        rules.clear();   // apaga as regras antigas antes de voltar a ler, uma vez que ao formar uma regra podemos desfazer outra
+
+        for(GameObject o : objects){ //vamos percorrer todos os objetos do mapa para ver onde ha algum verbo
+            if (isWord(o) && ((Word) o).tipo() == WordType.VERBO) { 
+                checkRule(o.getPosition(), Direction.LEFT); //vai ver se na linha horizontal ha regra
+                checkRule(o.getPosition(), Direction.UP); //vai ver se na linha vertical ha regra
             }
         }
     }
 
-    public boolean isWord( GameObject obj){
+    public boolean isWord(GameObject obj){
         return obj instanceof Word;
     } 
 
-    public Word getObjWord( Point2D pos){
-        for(ImageTile o : objects){
-            if (o.getPosition().equals(pos) && (((GameObject) o) instanceof Word)) {
+    public Word getObjWord(Point2D pos){
+        for(GameObject o : objects){
+            if (o.getPosition().equals(pos) && isWord(o)) {
                return (Word) o; 
             }
         }
         return null;
     }
 
-    public boolean hasRule(String name, String connecter, String rule){
-        return rules.contains(name+ connecter + rule);
+    public boolean hasRule(String name, String connecter, String rule){ //verifica se existe a regra na lista
+        return rules.contains(name + connecter + rule);
     }
 
     public boolean isWin(){
-        for(ImageTile o : objects){
-            GameObject gameObject = ((GameObject) o);
-            if(o.getPosition().equals(getPlayer().getPosition()) && (gameObject instanceof Flag || hasRule(gameObject.getNameWithoutTraco(), "is", "win"))){
+        for(GameObject o : objects){
+            if(o.getPosition().equals(getPlayer().getPosition()) && (o instanceof Flag || hasRule(o.getNameWithoutTraco(), "is", "win"))){
                 return true;
             }
         }
@@ -247,17 +268,20 @@ public class Room {
 
     public void explodeBomb(Point2D pos){
         List<Point2D> posAExplodir = pos.getWideNeighbourhoodPoints();
-        List<ImageTile> objARemover = new ArrayList<>();
-        List<ImageTile> objASubstituir = new ArrayList<>();
+        List<GameObject> objARemover = new ArrayList<>();
+        List<GameObject> objASubstituir = new ArrayList<>();
 
         posAExplodir.add(pos);
 
         //adicionar a lista os objetos que vamos remover e substituir as Wall por CrackedWalls
-        for(ImageTile o : objects){
-            if(posAExplodir.contains(o.getPosition()) && !(((GameObject)o) instanceof Dirt)){
-                if(((GameObject)o) instanceof Wall){
+        for(GameObject o : objects){
+            if(posAExplodir.contains(o.getPosition()) && !(o instanceof Dirt)){
+                if(o instanceof Wall){
                     objASubstituir.add(new CrackedWall(o.getPosition()));
                 }
+                    
+                    //duvida de como fazer caso exploda uma bomba. O tick continua a contar 
+
                 objARemover.add(o);
             }
         }
@@ -277,7 +301,7 @@ public class Room {
     public void tick(){
         List<Tickable> areGoingToExplode = new ArrayList<>();
 
-        for(ImageTile o : objects){
+        for(GameObject o : objects){
             if(o instanceof Tickable){
                 ((Tickable)o).tick();
             }
