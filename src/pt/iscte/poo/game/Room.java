@@ -282,9 +282,6 @@ public class Room {
                 if(o instanceof Wall){
                     objASubstituir.add(new CrackedWall(o.getPosition()));
                 }
-                    
-                    //duvida de como fazer caso exploda uma bomba. O tick continua a contar 
-
                 objARemover.add(o);
             }
         }
@@ -313,11 +310,8 @@ public class Room {
                 areGoingToExplode.add((Bomb)o);
             }
         }
-
         for(Tickable b : areGoingToExplode){
             explodeBomb(((Bomb)b).getPosition());
         }
     }
-
-
 }
