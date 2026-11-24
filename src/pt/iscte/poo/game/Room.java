@@ -157,12 +157,13 @@ public class Room {
 
 
 
-    public void move(Direction d) {
-        
+    public boolean move(Direction d) {
+        boolean andou = false;
         Baba baba = getPlayer(); //vai buscar o player
         baba.setDirection(d); //vira o baba para a direcao para onde o mesmo vai andar
-        moveObject(baba, d); //comeca o movimento recursivo do Baba(vai empurar objetos pushable) para direcao 
+        if(moveObject(baba, d)) andou = true; //comeca o movimento recursivo do Baba(vai empurar objetos pushable) para direcao 
         updateRules(); //apos cada movimento, verifica todas as regras da sala
+        return andou;
     }
         
       
@@ -244,6 +245,13 @@ public class Room {
                 checkRule(o.getPosition(), Direction.UP); //vai ver se na linha vertical ha regra
             }
         }
+    }
+
+    public boolean conflito(){
+        boolean stop = hasRule("box", "is", "stop");
+        boolean move = hasRule("box", "is", "move");
+        boolean win  = hasRule("box", "is", "win");
+        return (stop && move) || (move && win);
     }
 
     public boolean isWord(GameObject obj){
