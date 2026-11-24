@@ -39,6 +39,7 @@ public class Room {
     private String roomName;
     private Baba player;
     private Set<String> rules = new HashSet<>(); //adicionamos para as rules ativas. E um set para nao haver regras repetidas
+    private List<Hole> holes = new ArrayList<>();
 
     private boolean playerIsAlive = true;
     private int x;
@@ -119,6 +120,7 @@ public class Room {
         catch( FileNotFoundException e){
             throw new IllegalArgumentException("Ficheiro nao encontrado");
         }
+        r.createHoles();
         r.updateRules(); // podem ja estar regras formadas sem nenhum movimento
         return r;
     }
@@ -186,13 +188,14 @@ public class Room {
         }
     }
         gameObject.setPosition(newPosition); // como o objeto pode mover, atualiza a posicao do objeto
+        if(hasHole(newPosition)) fallInHole(gameObject);
         return true; //confirma que o objeto se moveu
     }
 
     public boolean isBlocked(Point2D pos){
         if(isOutOfBounds(pos)) return true; //se sair do mapa e uma posicao bloqueada
         for(GameObject o : objects){
-            if((o.getPosition().equals(pos) && (o.isSolid() || hasRule(o.getNameWithoutTraco(), "is", "stop")))){
+            if((o.getPosition().equals(pos) && !o.isStuck() && (o.isSolid() || hasRule(o.getNameWithoutTraco(), "is", "stop")))){
                 return true;
             }
         }
@@ -202,7 +205,7 @@ public class Room {
     private List<GameObject> getPushables(Point2D pos){ //vai buscar todos os objetos que podem ser empuarrados numa determinada posicao
         List<GameObject> pushables = new ArrayList<>(); //cria a lista que vai guardar os objetos empurraveis
         for(GameObject o : objects){ 
-            if(o.getPosition().equals(pos) && (o.isPushable() || hasRule(o.getNameWithoutTraco(), "is", "move"))){
+            if(o.getPosition().equals(pos) && !o.isStuck() && (o.isPushable() || hasRule(o.getNameWithoutTraco(), "is", "move"))){
                 pushables.add((GameObject) o);
             }
         }
@@ -315,17 +318,46 @@ public class Room {
         }
     }
 
-    private GameObject getObj(Point2D pos){
+    /*private GameObject getObj(Point2D pos){
         for(GameObject o : objects){
             if(o.getPosition().equals(pos)){
                 return o;
             }
         }
         return null;
+    } */
+
+    public boolean hasHole(Point2D pos){
+        for(Hole h: holes){
+            if(h.getPosition().equals(pos)) return true;
+        }
+        return false;
     }
 
-    public void fallInHole(Point2D pos){
-        GameObject o = getObj(pos);
-        
+    public void createHoles(){
+        for( GameObject o: objects)
+            if(o instanceof Hole) holes.add((Hole) o);
+    }
+
+    public void fallInHole(GameObject obj){
+        if(obj instanceof Box){
+            ((Box) obj).fallInHole();
+            holes.remove(getHole(obj.getPosition())); 
+        } 
+        else if(obj == player){
+            playerIsAlive = false;
+        }
+        else {
+            objects.remove(obj);
+        }
+    }
+
+    public Hole getHole( Point2D pos){
+        for(Hole h: holes){
+            if(h.getPosition().equals(pos)) {
+                return h;
+            }
+        }
+        return null;
     }
 }
