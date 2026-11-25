@@ -195,44 +195,4 @@ public class GameEngine implements Observer { //motor do jogo, é observador da 
         return retorno;
     }
 
-    // Devolve a tabela das melhores pontuacoes em HTML (para a janela do showMessage)
-/*private String readScores() {
-    String html = "<html>"
-        + "<h2 style='text-align:center; color:#d6337f;'>Top 10</h2>"
-        + "<table border='0' cellpadding='4'>"
-        + "<tr style='background:#f7c6dc;'>"
-        + "<th>#</th><th>Nome</th><th>Tempo</th><th>Moves</th></tr>";
-
-    for (int i = 0; i < melhoresScores.size(); i++) {
-        String[] partes = melhoresScores.get(i).split(",");
-        String nome = partes[0];
-        int tempo = Integer.parseInt(partes[1]);
-        String moves = partes[2];
-
-        String cor = (i == 0) ? "#d4a017" : "black";   // o 1.o lugar fica dourado
-        html += "<tr style='color:" + cor + ";'>"
-              + "<td>" + (i + 1) + "</td>"
-              + "<td>" + nome + "</td>"
-              + "<td>" + timeToString(tempo) + "</td>"
-              + "<td>" + moves + "</td></tr>";
-    }
-
-    return html + "</table></html>";
-}
-
-// Converte um numero de segundos para o formato m:ss (ex: 88 -> 1:28)
-public String timeToString(int total) {
-    int min = total / 60;
-    int seg = total % 60;
-    if (seg < 10) {
-        return min + ":0" + seg;
-    }
-    return min + ":" + seg;
-}
-
-// Tempo decorrido desde o inicio do jogo, no formato m:ss
-public String timeToString() {
-    return timeToString(getTotalSeconds());
-}*/
-
 }
