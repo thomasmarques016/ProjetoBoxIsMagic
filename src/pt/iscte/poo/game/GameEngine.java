@@ -83,13 +83,16 @@ public class GameEngine implements Observer { //motor do jogo, é observador da 
     }
 
     private void updateStatus() {
-    ImageGUI.getInstance().setStatusMessage("Nivel " + level + " | moves: " + moves + " | Time: " + timeToString());
+    ImageGUI.getInstance().setStatusMessage("Nivel " + level + " | moves: " + moves + " | Time: " + timeToString() + "| R: reiniciar");
     }
 
     private void processTick() {
         lastTickProcessed++;
         currentRoom.tick();
-        if(!currentRoom.isBabaAlive() || currentRoom.conflito()) restartLevel();
+        if(!currentRoom.isBabaAlive() || currentRoom.conflito()){
+            restartLevel();
+            ImageGUI.getInstance().showMessage("Morreste", "Tenta Novamente \n Nível: " + this.level);
+        }
         updateStatus();
         updateGUI();
     }

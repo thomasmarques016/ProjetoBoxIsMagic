@@ -176,9 +176,18 @@ public class Room {
         }
 
         for(GameObject o : getPushables(newPosition)){ //percorre todos os objetos que podem ser empurrados na nova posicao
+
+
             boolean conseguiu = moveObject(o, d); //chamada recursiva: tenta empurrar o objeto da frente na mesma direcao
 
             if(!conseguiu){ //se o objeto da frente nao se conseguir mover(ex: bateu numa parede)
+
+                if(gameObject instanceof Trigger){ //ve se foi um trigger que empurrou o objeto
+                if(o instanceof Bomb){ //se for uma bomba
+                    ((Bomb)o).acender(); //ativa a bomba
+                } 
+            }
+            
                 return false; //cancela o movimento desse obj e consequentemente dos de tras
             }
 
@@ -186,7 +195,11 @@ public class Room {
                 if(o instanceof Bomb){ //se for uma bomba
                     ((Bomb)o).acender(); //ativa a bomba
                 } 
-        }
+                if(o instanceof Flag){
+                    continue;
+                }
+            }
+            
     }
         gameObject.setPosition(newPosition); // como o objeto pode mover, atualiza a posicao do objeto
         if(hasHole(newPosition)) fallInHole(gameObject);

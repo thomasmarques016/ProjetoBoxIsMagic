@@ -20,4 +20,9 @@ public class Flag extends GameObject {
         return 3;
     }
 
+    @Override 
+    public boolean isPushable(){ //pushable se for empurrada indiretamente(nao pelo baba)
+        return true;
+    }
+
 }

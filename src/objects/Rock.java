@@ -18,4 +18,9 @@ public class Rock extends GameObject {
     public int getLayer() {
         return 3;
     }
+
+    @Override 
+    public boolean isPushable(){
+        return true;
+    }
 }
