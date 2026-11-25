@@ -32,6 +32,7 @@ public class GameEngine implements Observer { //motor do jogo, é observador da 
         tempoInicial = System.currentTimeMillis();
         currentRoom = Room.readRoom(new File(ROOMS_DIRECTORY + "/room" + level + ".txt")); //vai ver o mapa   
         updateGUI(); //desenhar mapa
+        readFile();
     }
 
 	public static GameEngine getInstance() {  //retorna o motor de jogo atual
@@ -168,7 +169,8 @@ public class GameEngine implements Observer { //motor do jogo, é observador da 
     }
     }
 
-    public void readFile (File file){
+    public void readFile (){
+        File file = new File(HIGHSCORES_FILE);
         String line = "";
         try{
             Scanner sc = new Scanner(file);
@@ -184,10 +186,11 @@ public class GameEngine implements Observer { //motor do jogo, é observador da 
     }
 
     private String readScores(){
-        String retorno = "";
+        String retorno = "POSICAO | NOME | TEMPO | MOVES \n";
         for(int i = 0; i < melhoresScores.size(); i++){
             int pos = i + 1;
-            retorno += pos + " " + melhoresScores.get(i) + "\n";
+            String[] partes = melhoresScores.get(i).split(",");
+            retorno += pos + " | " + partes[0] + " | " + partes[1] + " | " + partes[2] + "\n";
         }
         return retorno;
     }
