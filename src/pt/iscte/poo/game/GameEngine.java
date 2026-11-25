@@ -48,7 +48,7 @@ public class GameEngine implements Observer { //motor do jogo, é observador da 
         if (k == KeyEvent.VK_R) {          // NOVO: tecla R recomeca o nivel
             restartLevel();
             updateGUI();
-            ImageGUI.getInstance().showMessage("Nível reiniciado", "Nível: " + level);
+            ImageGUI.getInstance().showMessage("Nível reiniciado", "Nivel: " + level);
         }
 
             if (k == KeyEvent.VK_LEFT || k == KeyEvent.VK_RIGHT || k == KeyEvent.VK_UP || k == KeyEvent.VK_DOWN) { //A tecla pressionada foi uma seta?
@@ -66,7 +66,7 @@ public class GameEngine implements Observer { //motor do jogo, é observador da 
                         }
                         addmelhoresScores(nome, tempoFinal, moves);
                         writeFile();
-                        ImageGUI.getInstance().showMessage("Fim do jogo", "Parabesns! Terminaste todos os niveis \n moves:" + moves +"\n Time:" + tempoFinal);
+                        ImageGUI.getInstance().showMessage("Fim do jogo", "Parabéns! Terminaste todos os niveis \n moves:" + moves +"\n Time:" + tempoFinal);
                         ImageGUI.getInstance().showMessage("Melhores tempos", readScores());
                     }
                     else{
