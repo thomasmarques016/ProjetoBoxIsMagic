@@ -177,7 +177,7 @@ public class Room {
 
         for(GameObject o : getPushables(newPosition)){ //percorre todos os objetos que podem ser empurrados na nova posicao
 
-            if(gameObject instanceof Trigger ){ //ve se foi um trigger que empurrou o objeto
+            if(gameObject instanceof Trigger){ //ve se foi um trigger que empurrou o objeto
 
                     if(o instanceof Flag){
                         continue;
@@ -188,6 +188,9 @@ public class Room {
                         ((Bomb)o).acender(); //ativa a bomba
                     } 
                 }
+            if(isWord(gameObject) && isWord(o)){
+                return false;
+            }
 
             boolean conseguiu = moveObject(o, d); //chamada recursiva: tenta empurrar o objeto da frente na mesma direcao
 
