@@ -78,6 +78,7 @@ public class GameEngine implements Observer { //motor do jogo, é observador da 
                         if (nome == null || nome.isBlank()) {
                             nome = "Anonimo";   // se carregar em Cancelar ou nao escrever nada
                         }
+                        nome = nome.replace(",", "");
                         addmelhoresScores(nome, tempoFinal, moves);
                         writeFile();
                         ImageGUI.getInstance().showMessage("Fim do jogo", "Parabéns! Terminaste todos os niveis \n moves:" + moves +"\n Time:" + timeToString(tempoFinal));
@@ -198,13 +199,20 @@ public class GameEngine implements Observer { //motor do jogo, é observador da 
                 if(line.isBlank()){
                     continue;
                 }
-                
-                melhoresScores.add(line);
+                try{
+                    String [] partes = line.split(",");
+                    Integer.parseInt(partes[1]); // o tempo tem de ser um numero
+                    Integer.parseInt(partes[2]); // move tem de ser um numero
+                    melhoresScores.add(line);
+                }
+                catch (NumberFormatException | IndexOutOfBoundsException e){ // apanhar se tempo e move nao forem numeros e se nao forem exatamente 3 partes
+                    System.err.println("Linha de HighScores invalida foi ignorada" + line);
+                }
             }
             sc.close();
         }
         catch (FileNotFoundException e){
-            // primeira vez que se joga: ainda nao ha pontuacoes
+            System.err.println("Nao foi possivel ler os highscores");// primeira vez que se joga: ainda nao ha pontuacoes
         } 
     }
 
