@@ -198,6 +198,7 @@ public class GameEngine implements Observer { //motor do jogo, é observador da 
                 if(line.isBlank()){
                     continue;
                 }
+                
                 melhoresScores.add(line);
             }
             sc.close();
