@@ -22,10 +22,6 @@ public class Hole extends GameObject {
         return 1;
     }
 
-    public boolean isCovered(){
-        return this.covered;
-    }
-
 
 
 }

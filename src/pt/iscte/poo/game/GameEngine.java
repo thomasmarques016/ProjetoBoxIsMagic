@@ -13,7 +13,7 @@ import pt.iscte.poo.observer.Observed; //observado(observavel)
 import pt.iscte.poo.observer.Observer; //observador
 import pt.iscte.poo.utils.Direction; //direcoes(up, down, left, right)
 
-public class GameEngine implements Observer { //motor do jogo, é observador da janela(ImageGUI)
+public class GameEngine implements Observer { //motor do jogo, e observador da janela(ImageGUI)
 
     private static GameEngine INSTANCE = new GameEngine(); //cria motor do jogo
     private static final String ROOMS_DIRECTORY = "rooms";
@@ -54,9 +54,9 @@ public class GameEngine implements Observer { //motor do jogo, é observador da 
             int k = ImageGUI.getInstance().keyPressed();   //que tecla carregaram na janela atual??
 
         if (k == KeyEvent.VK_R) {          // NOVO: tecla R recomeca o nivel
-            restartLevel();
+            startLevel();
             updateGUI();
-            ImageGUI.getInstance().showMessage("Nível reiniciado", "Nivel: " + level);
+            ImageGUI.getInstance().showMessage("Nivel reiniciado", "Nivel: " + level);
         }
 
             if (k == KeyEvent.VK_LEFT || k == KeyEvent.VK_RIGHT || k == KeyEvent.VK_UP || k == KeyEvent.VK_DOWN) { //A tecla pressionada foi uma seta?
@@ -67,7 +67,7 @@ public class GameEngine implements Observer { //motor do jogo, é observador da 
                 }
                 
                 if(currentRoom.conflito()){
-                    restartLevel();
+                    startLevel();
                     ImageGUI.getInstance().showMessage("Morreste", "Tenta Novamente \n Nível: " + this.level);
                 }
 
@@ -81,21 +81,22 @@ public class GameEngine implements Observer { //motor do jogo, é observador da 
                         nome = nome.replace(",", "");
                         addmelhoresScores(nome, tempoFinal, moves);
                         writeFile();
-                        ImageGUI.getInstance().showMessage("Fim do jogo", "Parabéns! Terminaste todos os niveis \n moves:" + moves +"\n Time:" + timeToString(tempoFinal));
+                        ImageGUI.getInstance().showMessage("Fim do jogo", "Parabens! Terminaste todos os niveis \n moves:" + moves +"\n Time:" + timeToString(tempoFinal));
                         ImageGUI.getInstance().showMessage("Melhores tempos", readScores());
+                        System.exit(0);
                     }
                     else{
                         levelUp();  
                     }
                 }
-                updateGUI(); //atualizar a posicao nova do baba, não aparece na janela, ou seja é guardado em memória
+                updateGUI(); //atualizar a posicao nova do baba, nao aparece na janela, ou seja e guardado em memoria
             }
         }
         int t = ImageGUI.getInstance().getTicks(); //pergunta a janela quantos ticks ja passaram desde o inicio do jogo
-        while (lastTickProcessed < t) { //se ainda não atualizou 
+        while (lastTickProcessed < t) { //se ainda nao atualizou 
             processTick(); //processar o tick
         }
-        ImageGUI.getInstance().update(); //Diz a janela para redesenhar, este sim redesenha na parte gráfica
+        ImageGUI.getInstance().update(); //Diz a janela para redesenhar, este sim redesenha na parte grafica
     }
 
     private void updateStatus() {
@@ -106,8 +107,8 @@ public class GameEngine implements Observer { //motor do jogo, é observador da 
         lastTickProcessed++;
         currentRoom.tick();
         if(!currentRoom.isBabaAlive() || currentRoom.conflito()){
-            restartLevel();
-            ImageGUI.getInstance().showMessage("Morreste", "Tenta Novamente \n Nível: " + this.level);
+            startLevel();
+            ImageGUI.getInstance().showMessage("Morreste", "Tenta Novamente \n Nivel: " + this.level);
         }
         updateStatus();
         updateGUI();
@@ -128,6 +129,10 @@ public class GameEngine implements Observer { //motor do jogo, é observador da 
     public void levelUp(){
         ImageGUI.getInstance().showMessage("Nivel concluido", "Passaste o nivel " + level + "!" + "\nmoves: " + moves + "\nTime: " + timeToString(getTotalSeconds()));
         level++;
+        startLevel();
+    }
+
+    public void startLevel(){
         try{
             this.currentRoom = Room.readRoom(new File(ROOMS_DIRECTORY + "/room" + level + ".txt"));
         }
@@ -135,10 +140,6 @@ public class GameEngine implements Observer { //motor do jogo, é observador da 
             ImageGUI.getInstance().showMessage("ERRO", e.getMessage());
             System.exit(1);
         }
-    }
-
-    public void restartLevel(){
-        currentRoom = Room.readRoom(new File(ROOMS_DIRECTORY + "/room" + level + ".txt"));
     }
 
     public int getTotalSeconds() {
@@ -172,7 +173,7 @@ public class GameEngine implements Observer { //motor do jogo, é observador da 
             melhoresScores.add(nome + "," + tempo + "," + moves);
         }
         while (melhoresScores.size()>10) {
-            melhoresScores.removeLast();
+            melhoresScores.remove(melhoresScores.size()-1);
         }  
     }
 

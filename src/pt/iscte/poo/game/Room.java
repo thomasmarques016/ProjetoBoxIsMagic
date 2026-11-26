@@ -132,7 +132,7 @@ public class Room {
             throw new IllegalArgumentException("Nao foi possivel carregar o nivel");
         }
         if(r.getPlayer() == null){
-            throw new IllegalArgumentException("Nao foi possível iniciar o jogo, ja que nao existe nenhum player");
+            throw new IllegalArgumentException("Nao foi possivel iniciar o jogo, ja que nao existe nenhum player");
         }
         r.createHoles();
         r.updateRules(); // podem ja estar regras formadas sem nenhum movimento
