@@ -53,7 +53,7 @@ public class GameEngine implements Observer { //motor do jogo, e observador da j
         if (ImageGUI.getInstance().wasKeyPressed()) {    //carregaram numa tecla na janela atual?
             int k = ImageGUI.getInstance().keyPressed();   //que tecla carregaram na janela atual??
 
-        if (k == KeyEvent.VK_R) {          // NOVO: tecla R recomeca o nivel
+        if (k == KeyEvent.VK_R) {          // tecla R recomeca o nivel
             startLevel();
             updateGUI();
             ImageGUI.getInstance().showMessage("Nivel reiniciado", "Nivel: " + level);
@@ -68,7 +68,7 @@ public class GameEngine implements Observer { //motor do jogo, e observador da j
                 
                 if(currentRoom.conflito()){
                     startLevel();
-                    ImageGUI.getInstance().showMessage("Morreste", "Tenta Novamente \n Nível: " + this.level);
+                    ImageGUI.getInstance().showMessage("Conflito de regras", "Tenta Novamente \n Nivel: " + this.level);
                 }
 
                 else if(currentRoom.isWin()){
