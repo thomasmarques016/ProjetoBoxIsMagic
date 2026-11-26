@@ -28,7 +28,7 @@ public class GameEngine implements Observer { //motor do jogo, é observador da 
 
 
     private GameEngine() {
-        this.level = 2;
+        this.level = 0;
         tempoInicial = System.currentTimeMillis();
         try{
             currentRoom = Room.readRoom(new File(ROOMS_DIRECTORY + "/room" + level + ".txt")); //vai ver o mapa  
@@ -65,7 +65,13 @@ public class GameEngine implements Observer { //motor do jogo, é observador da 
                 if(currentRoom.move(d)){
                     moves++ ;
                 }
-                if(currentRoom.isWin()){
+                
+                if(currentRoom.conflito()){
+                    restartLevel();
+                    ImageGUI.getInstance().showMessage("Morreste", "Tenta Novamente \n Nível: " + this.level);
+                }
+
+                else if(currentRoom.isWin()){
                     if (level==2) {
                         int tempoFinal = getTotalSeconds();
                         String nome = ImageGUI.getInstance().showInputDialog("Dados do Jogador", "Nome: ");
