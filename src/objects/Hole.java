@@ -4,7 +4,6 @@ import pt.iscte.poo.utils.Point2D;
 
 public class Hole extends GameObject {
 
-    private boolean covered = true;
 
     public Hole(Point2D position) {
         super(position);
