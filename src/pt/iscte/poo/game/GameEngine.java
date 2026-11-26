@@ -28,12 +28,20 @@ public class GameEngine implements Observer { //motor do jogo, é observador da 
 
 
     private GameEngine() {
-        this.level = 0;
+        this.level = 2;
         tempoInicial = System.currentTimeMillis();
-        currentRoom = Room.readRoom(new File(ROOMS_DIRECTORY + "/room" + level + ".txt")); //vai ver o mapa   
+        try{
+            currentRoom = Room.readRoom(new File(ROOMS_DIRECTORY + "/room" + level + ".txt")); //vai ver o mapa  
+        }
+        catch(IllegalArgumentException e){
+            ImageGUI.getInstance().showMessage("ERRO", e.getMessage());
+            System.exit(1);
+        }
         updateGUI(); //desenhar mapa
         readFile();
     }
+
+
 
 	public static GameEngine getInstance() {  //retorna o motor de jogo atual
 		return INSTANCE;
@@ -66,7 +74,7 @@ public class GameEngine implements Observer { //motor do jogo, é observador da 
                         }
                         addmelhoresScores(nome, tempoFinal, moves);
                         writeFile();
-                        ImageGUI.getInstance().showMessage("Fim do jogo", "Parabéns! Terminaste todos os niveis \n moves:" + moves +"\n Time:" + tempoFinal);
+                        ImageGUI.getInstance().showMessage("Fim do jogo", "Parabéns! Terminaste todos os niveis \n moves:" + moves +"\n Time:" + timeToString(tempoFinal));
                         ImageGUI.getInstance().showMessage("Melhores tempos", readScores());
                     }
                     else{
@@ -84,7 +92,7 @@ public class GameEngine implements Observer { //motor do jogo, é observador da 
     }
 
     private void updateStatus() {
-    ImageGUI.getInstance().setStatusMessage("Nivel " + level + " | moves: " + moves + " | Time: " + timeToString() + "| R: reiniciar");
+    ImageGUI.getInstance().setStatusMessage("Nivel " + level + " | moves: " + moves + " | Time: " + timeToString(getTotalSeconds()) + "| R: reiniciar");
     }
 
     private void processTick() {
@@ -111,9 +119,15 @@ public class GameEngine implements Observer { //motor do jogo, é observador da 
     }
 
     public void levelUp(){
-        ImageGUI.getInstance().showMessage("Nivel concluido", "Passaste o nivel " + level + "!" + "\nmoves: " + moves + "\nTime: " + timeToString());
+        ImageGUI.getInstance().showMessage("Nivel concluido", "Passaste o nivel " + level + "!" + "\nmoves: " + moves + "\nTime: " + timeToString(getTotalSeconds()));
         level++;
-        this.currentRoom = Room.readRoom(new File(ROOMS_DIRECTORY + "/room" + level + ".txt"));
+        try{
+            this.currentRoom = Room.readRoom(new File(ROOMS_DIRECTORY + "/room" + level + ".txt"));
+        }
+        catch(IllegalArgumentException e){
+            ImageGUI.getInstance().showMessage("ERRO", e.getMessage());
+            System.exit(1);
+        }
     }
 
     public void restartLevel(){
@@ -124,10 +138,9 @@ public class GameEngine implements Observer { //motor do jogo, é observador da 
     return (int) ((System.currentTimeMillis() - tempoInicial) / 1000);
     }
 
-    public String timeToString() {
-    int total = getTotalSeconds();
-    int min = total / 60;
-    int seg = total % 60;
+    public String timeToString(int totalSeconds) {
+    int min = totalSeconds / 60;
+    int seg = totalSeconds % 60;
     if (seg < 10) {
         return min + ":0" + seg;
     }
@@ -176,6 +189,9 @@ public class GameEngine implements Observer { //motor do jogo, é observador da 
             Scanner sc = new Scanner(file);
             while (sc.hasNextLine()) {
                 line = sc.nextLine();
+                if(line.isBlank()){
+                    continue;
+                }
                 melhoresScores.add(line);
             }
             sc.close();

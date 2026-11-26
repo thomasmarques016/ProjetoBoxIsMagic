@@ -83,10 +83,14 @@ public class Room {
 
         for(int i = 0; i < rows; i++){ 
                 String linha = sc.nextLine(); // vai ate a ultima linha indicada na primeira linha do ficheiro
+                if(linha.isEmpty()){ //se chegar a linha vazia antes de acabar as linhas da dimensao do mapa
+                    throw new IllegalArgumentException("Mapa incompleto: faltam linhas");
+                }
+               
                 for (int j = 0; j< cols; j++){ 
                     Point2D posicao = new Point2D(j, i); // no enunciado ta que x e a coluna e o y e a linha
                     r.addObject(new Dirt(posicao)); // vamos por chao em tudo
-                    char c = linha.charAt(j);
+                    char c = (j < linha.length()) ? linha.charAt(j) : ' ';
                     if(c=='X') r.addObject(new Wall(posicao));
                     else if(c=='x') r.addObject(new CrackedWall(posicao));
                     else if(c=='H') r.addObject(new Hole(posicao));
@@ -103,6 +107,13 @@ public class Room {
         try{
 
             Point2D posicao = new Point2D(Integer.parseInt(comp[1]), Integer.parseInt(comp[2]));
+
+
+            if(r.isOutOfBounds(posicao)){ //temos que dar catch no contrutor do GameEngine
+                throw new IllegalArgumentException("A posicao do objeto nao pode ser fora das dimensoes do mapa");
+            }
+
+
             GameObject obj = createObject(comp[0], posicao, comp);
             r.addObject(obj);
             if(obj instanceof Baba){
@@ -111,14 +122,17 @@ public class Room {
             }
 
         }
-        catch(NumberFormatException | IndexOutOfBoundsException e){
+        catch(IllegalArgumentException | IndexOutOfBoundsException e){
             System.err.println("Erro na linha: " + linha);
         }
         }
         sc.close();
         }
-        catch( FileNotFoundException e){
-            throw new IllegalArgumentException("Ficheiro nao encontrado");
+        catch(FileNotFoundException e){
+            throw new IllegalArgumentException("Nao foi possivel carregar o nivel");
+        }
+        if(r.getPlayer() == null){
+            throw new IllegalArgumentException("Nao foi possível iniciar o jogo, ja que nao existe nenhum player");
         }
         r.createHoles();
         r.updateRules(); // podem ja estar regras formadas sem nenhum movimento
@@ -127,7 +141,12 @@ public class Room {
 
     private static GameObject createObject(String name, Point2D pos, String[] comp){
         switch (name) {
-            case "baba":     return new Baba(pos, comp[3]);
+            case "baba":
+                String c = comp[3];
+                if(!c.equals("l") && !c.equals("r") && !c.equals("u") && !c.equals("d")){
+                    throw new IllegalArgumentException("A direcao do baba e invalida");
+                }     
+                return new Baba(pos, comp[3]);
             case "rock":     return new Rock(pos);
             case "bomb":     return new Bomb(pos);
             case "box":      return new Box(pos);
