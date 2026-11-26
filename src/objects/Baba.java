@@ -1,14 +1,8 @@
 package objects;
 
-import pt.iscte.poo.game.GameEngine;
-import pt.iscte.poo.game.Room;
-import pt.iscte.poo.gui.ImageTile;
 import pt.iscte.poo.utils.Direction;
 import pt.iscte.poo.utils.Point2D;
-import pt.iscte.poo.utils.Vector2D;
 
-import java.util.List;
-import java.util.Random;
 
 public class Baba extends GameObject implements Trigger{
 

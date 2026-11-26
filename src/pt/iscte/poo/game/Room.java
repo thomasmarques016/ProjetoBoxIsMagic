@@ -1,6 +1,5 @@
 package pt.iscte.poo.game;
 
-import java.awt.Dimension;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -68,8 +67,7 @@ public class Room {
     public static Room readRoom(File f) {
         Room r = new Room();
         r.setName(f.getName());
-        try{
-        Scanner sc = new Scanner(f);
+        try (Scanner sc = new Scanner(f)) { // try-with-resources: o Scanner fecha-se sozinho no fim
         int cols = 0;
         int rows = 0;
         if(sc.hasNextLine()){
@@ -126,7 +124,6 @@ public class Room {
             System.err.println("Erro na linha: " + linha);
         }
         }
-        sc.close();
         }
         catch(FileNotFoundException e){
             throw new IllegalArgumentException("Nao foi possivel carregar o nivel");
