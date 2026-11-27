@@ -17,7 +17,6 @@ public abstract class Word extends GameObject{
         return word;
     }
 
-    //VER MELHOR
     /** Todas as palavras tem imagem "word-<texto>" e a mesma camada. */
     @Override
     public String getName() {
