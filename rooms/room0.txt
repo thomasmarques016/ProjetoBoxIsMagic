@@ -22,3 +22,8 @@ flag,18,12
 wordBox,2,10
 wordIs,3,10
 wordMove,4,8
+acid,3,4
+box,2,4
+rock,5,4
+ghost,4,10,r
+ghost,9,10,r

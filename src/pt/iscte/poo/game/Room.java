@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
 
+import objects.Acid;
 import objects.Baba;
 import objects.Bomb;
 import objects.Box;
@@ -15,6 +16,7 @@ import objects.CrackedWall;
 import objects.Dirt;
 import objects.Flag;
 import objects.GameObject;
+import objects.Ghost;
 import objects.Grass;
 import objects.Hole;
 import objects.Rock;
@@ -144,6 +146,12 @@ public class Room {
                     throw new IllegalArgumentException("A direcao do baba e invalida");
                 }     
                 return new Baba(pos, comp[3]);
+            case "ghost": 
+                String x = comp[3];
+                if(!x.equals("l") && !x.equals("r") && !x.equals("u") && !x.equals("d")){
+                    throw new IllegalArgumentException("A direcao do ghost e invalida");
+                }     
+                return new Ghost(pos, comp[3]);
             case "rock":     return new Rock(pos);
             case "bomb":     return new Bomb(pos);
             case "box":      return new Box(pos);
@@ -153,6 +161,7 @@ public class Room {
             case "wordWin":  return new WordWin(pos);
             case "wordMove": return new WordMove(pos);
             case "wordStop": return new WordStop(pos);
+            case "acid" : return new Acid(pos);
         
             default:
                 throw new IllegalArgumentException("Objeto desconhecido: " + name);
@@ -177,11 +186,54 @@ public class Room {
         boolean andou = false;
         Baba baba = getPlayer(); //vai buscar o player
         baba.setDirection(d); //vira o baba para a direcao para onde o mesmo vai andar
-        if(moveObject(baba, d)) andou = true; //comeca o movimento recursivo do Baba(vai empurar objetos pushable) para direcao 
+        Direction opp = d.opposite();
+        if(moveObject(baba, d)){
+            andou = true; //comeca o movimento recursivo do Baba(vai empurar objetos pushable) para direcao 
+            for(Ghost g: getGhosts()){
+                moveGhost(g, opp);
+            }
+        }
         updateRules(); //apos cada movimento, verifica todas as regras da sala
         return andou;
     }
-        
+
+    private List<Ghost> getGhosts(){
+        List<Ghost> ghosts = new ArrayList<>();
+        for(GameObject o: objects){
+            if(o instanceof Ghost){
+                ghosts.add((Ghost) o);
+            }
+        }
+        return ghosts;
+    }
+
+    private void moveGhost(Ghost g ,Direction d){
+        g.setDirection(d);
+        Point2D p = g.getPosition().plus(d.asVector());
+        if(isOutOfBounds(p) || (hasRule("box", "is", "stop") && hasBoxAt(p) )) return ;
+        else if (hasHole(p)){
+            objects.remove(g);
+            return;
+        }
+        for(GameObject o : objects){
+            if(o instanceof Flag && o.getPosition().equals(p)){
+               playerIsAlive = false;
+            }
+        }
+        if (g.getPosition().equals(getPlayer().getPosition()) || p.equals(getPlayer().getPosition())){
+            playerIsAlive = false;
+        }
+        else {
+            for(GameObject o: getPushables(p)){
+                if(!moveObject(o, d)){
+                    return;
+                }
+            }
+            g.setPosition(p);
+        }
+    }
+
+    
       
     public boolean moveObject(GameObject gameObject, Direction d){ //funcao recusiva
 
@@ -199,11 +251,25 @@ public class Room {
                         continue;
                     }
                     
-                    
                     if(o instanceof Bomb){ //se for uma bomba
                         ((Bomb)o).acender(); //ativa a bomba
-                    } 
+                    }
+                    
+                    if(o instanceof Acid){ // pode nao servir se metermos mais objetos como trigger
+                        playerIsAlive=false;
+                        return false;
+                    }
                 }
+
+            if(gameObject instanceof Acid && o instanceof Rock){
+                objects.remove(o);
+                continue;
+            }
+            if(gameObject instanceof Rock && o instanceof Acid){
+                objects.remove(gameObject);
+                return true;
+            }
+           
             if(isWord(gameObject) && isWord(o)){
                 return false;
             }
@@ -353,14 +419,14 @@ public class Room {
         }
     }
 
-    /*private GameObject getObj(Point2D pos){
+    private boolean hasBoxAt(Point2D pos){
         for(GameObject o : objects){
-            if(o.getPosition().equals(pos)){
-                return o;
+            if(o.getPosition().equals(pos) && o instanceof Box && !o.isStuck()){
+                return true;
             }
         }
-        return null;
-    } */
+        return false;
+    } 
 
     public boolean hasHole(Point2D pos){
         for(Hole h: holes){
